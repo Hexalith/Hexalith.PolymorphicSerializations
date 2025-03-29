@@ -1,10 +1,10 @@
-# Hexalith MyNewPackage
+# Hexalith PolymorphicSerializations
 
 ## Overview
 This repository serves as a template for creating new packages for the Hexalith platform. It provides the essential structure and configuration needed to develop, test, and integrate new functionality with the Hexalith ecosystem.
 
 ## Purpose
-The Hexalith MyNewPackage template simplifies the process of creating new packages by providing:
+The Hexalith PolymorphicSerializations template simplifies the process of creating new packages by providing:
 - Standardized project structure
 - Pre-configured build settings
 - Testing framework setup

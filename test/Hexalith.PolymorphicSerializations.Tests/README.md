@@ -1,10 +1,10 @@
-# Hexalith.MyNewPackage.Tests
+# Hexalith.PolymorphicSerializations.Tests
 
-This repository contains unit tests for the Hexalith.MyNewPackage library, a component of the Hexalith platform.
+This repository contains unit tests for the Hexalith.PolymorphicSerializations library, a component of the Hexalith platform.
 
 ## Overview
 
-Hexalith.MyNewPackage.Tests provides comprehensive test coverage for all functionality within the Hexalith.MyNewPackage library, ensuring reliability and correctness of the implementation.
+Hexalith.PolymorphicSerializations.Tests provides comprehensive test coverage for all functionality within the Hexalith.PolymorphicSerializations library, ensuring reliability and correctness of the implementation.
 
 ## Project Structure
 

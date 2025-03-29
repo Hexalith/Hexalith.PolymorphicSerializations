@@ -13,7 +13,7 @@
   <Import Project="$(HexalithBuildProps)/Hexalith.Package.props" />
 
   <PropertyGroup>
-    <Product>Hexalith.MyNewPackage</Product>
-    <RepositoryUrl>https://github.com/Hexalith/Hexalith.MyNewPackage</RepositoryUrl>
+    <Product>Hexalith.PolymorphicSerializations</Product>
+    <RepositoryUrl>https://github.com/Hexalith/Hexalith.PolymorphicSerializations</RepositoryUrl>
   </PropertyGroup>
 </Project>
