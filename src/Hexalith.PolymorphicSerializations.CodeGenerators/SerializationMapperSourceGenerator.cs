@@ -19,7 +19,7 @@ using Microsoft.CodeAnalysis.Text;
 [Generator(LanguageNames.CSharp)]
 public class SerializationMapperSourceGenerator : IIncrementalGenerator
 {
-    private const string _serializationMapperAttributeFullName = "Hexalith.PolymorphicSerialization.PolymorphicSerializationAttribute";
+    private const string _serializationMapperAttributeFullName = "Hexalith.PolymorphicSerializations.PolymorphicSerializationAttribute";
 
     private const string _serializationMapperAttributeName = "PolymorphicSerializationAttribute";
 
@@ -72,11 +72,19 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
 
         string code = GenerateAddServicesExtension(symbols);
 
-        context.AddSource("SerializationMapperExtension.g.cs", SourceText.From(code, Encoding.UTF8));
+        if (!string.IsNullOrEmpty(code))
+        {
+            context.AddSource("SerializationMapperExtension.g.cs", SourceText.From(code, Encoding.UTF8));
+        }
     }
 
     private static string GenerateAddServicesExtension(List<INamedTypeSymbol> symbols)
     {
+        if (symbols.Count == 0)
+        {
+            return string.Empty;
+        }
+
         string namespaceName = symbols[0].ContainingAssembly.MetadataName;
         string usings = symbols
             .Select(s => s.ContainingNamespace.ToDisplayString())
@@ -102,12 +110,12 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
                          using Microsoft.Extensions.DependencyInjection;
                          using Microsoft.Extensions.DependencyInjection.Extensions;
                          using System;
-                         using Hexalith.PolymorphicSerialization;
+                         using Hexalith.PolymorphicSerializations;
 
                          /// <summary>
                          /// Extension methods for registering polymorphic serialization mappers.
                          /// </summary>
-                         public static class {{project}}
+                         public static class {{project}}Serialization
                          {
                              /// <summary>
                              /// Adds the polymorphic mappers to the service collection.
@@ -181,13 +189,17 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
         }
 
         // get the name and the version from the attribute
-        TypedConstant nameParam = syntax.Data.ConstructorArguments[0];
-        TypedConstant versionParam = syntax.Data.ConstructorArguments[1];
+        TypedConstant nameParam = syntax.Data.ConstructorArguments.Length > 0
+            ? syntax.Data.ConstructorArguments[0]
+            : default;
+        TypedConstant versionParam = syntax.Data.ConstructorArguments.Length > 1
+            ? syntax.Data.ConstructorArguments[1]
+            : default;
         string name = nameParam.Value == null || string.IsNullOrWhiteSpace((string?)nameParam.Value)
             ? classSymbol.MetadataName
             : (string)nameParam.Value;
 
-        int version = (int?)versionParam.Value ?? 1;
+        int version = versionParam.Value == null ? 1 : (int)versionParam.Value;
         string typeDiscriminator = /*PolymorphicSerializationAttribute.*/GetTypeName(name, version);
         string inheritance = hasParent ? string.Empty : " : PolymorphicRecordBase";
 
@@ -197,7 +209,7 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
                  namespace {{namespaceName}};
 
                  using Microsoft.Extensions.DependencyInjection;
-                 using Hexalith.PolymorphicSerialization;
+                 using Hexalith.PolymorphicSerializations;
                  using System.Runtime.Serialization;
 
                  /// <summary>

@@ -10,4 +10,4 @@ namespace Hexalith.PolymorphicSerializations.Tests.Objects;
 /// </summary>
 /// <param name="Id">The unique identifier.</param>
 [PolymorphicSerialization]
-public abstract record AttributeTestBase(string Id);
+public abstract partial record AttributeTestBase(string Id);

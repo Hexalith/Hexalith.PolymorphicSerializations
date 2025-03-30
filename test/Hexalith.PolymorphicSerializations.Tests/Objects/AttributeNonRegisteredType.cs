@@ -11,4 +11,4 @@ namespace Hexalith.PolymorphicSerializations.Tests.Objects;
 /// <param name="Code">The code value.</param>
 /// <param name="Title">The title value.</param>
 [PolymorphicSerialization]
-public record AttributeNonRegisteredType(string Code, string Title);
+public partial record AttributeNonRegisteredType(string Code, string Title);

@@ -11,4 +11,4 @@ namespace Hexalith.PolymorphicSerializations.Tests.Objects;
 /// <param name="Description">The description property specific to TestType2.</param>
 /// <param name="Enabled">The enabled flag specific to TestType2.</param>
 [PolymorphicSerialization(baseType: typeof(AttributeTestBase))]
-public record AttributeTestType2(string Id, string Description, bool Enabled) : AttributeTestBase(Id);
+public partial record AttributeTestType2(string Id, string Description, bool Enabled) : AttributeTestBase(Id);

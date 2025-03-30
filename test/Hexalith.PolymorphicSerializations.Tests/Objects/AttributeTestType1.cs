@@ -11,4 +11,4 @@ namespace Hexalith.PolymorphicSerializations.Tests.Objects;
 /// <param name="Name">The name property specific to TestType1.</param>
 /// <param name="Value">The value property specific to TestType1.</param>
 [PolymorphicSerialization]
-public record AttributeTestType1(string Id, string Name, int Value);
+public partial record AttributeTestType1(string Id, string Name, int Value);
