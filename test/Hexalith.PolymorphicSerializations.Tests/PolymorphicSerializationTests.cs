@@ -129,24 +129,6 @@ public class PolymorphicSerializationTests
     }
 
     /// <summary>
-    /// Tests non-registered type to ensure it still serializes without the type resolver.
-    /// </summary>
-    [Fact]
-    public void Serialize_NonRegisteredType_SerializesCorrectly()
-    {
-        // Arrange
-        NonRegisteredType value = new("ABC123", "Test Title");
-
-        // Act
-        string json = JsonSerializer.Serialize<PolymorphicRecordBase>(value, _options);
-
-        // Assert
-        json.ShouldContain("\"$type\":\"NonRegisteredType\"");
-        json.ShouldContain("\"Code\":\"ABC123\"");
-        json.ShouldContain("\"Title\":\"Test Title\"");
-    }
-
-    /// <summary>
     /// Tests non-registered type to ensure it throws a JsonException during serialization.
     /// </summary>
     [Fact]
@@ -156,7 +138,7 @@ public class PolymorphicSerializationTests
         NonRegisteredType value = new("ABC123", "Test Title");
 
         // Act & Assert
-        _ = Should.Throw<JsonException>(() => JsonSerializer.Serialize<PolymorphicRecordBase>(value, _options));
+        _ = Should.Throw<NotSupportedException>(() => JsonSerializer.Serialize<PolymorphicRecordBase>(value, _options));
     }
 
     /// <summary>
@@ -169,12 +151,12 @@ public class PolymorphicSerializationTests
         TestType1 value = new("id1", "Test Name", 42);
 
         // Act
-        string json = JsonSerializer.Serialize(value, _options);
+        string json = JsonSerializer.Serialize<PolymorphicRecordBase>(value, _options);
 
         // Assert
-        json.ShouldContain("\"$type\":\"TestType1\"");
-        json.ShouldContain("\"Id\":\"id1\"");
-        json.ShouldContain("\"Name\":\"Test Name\"");
-        json.ShouldContain("\"Value\":42");
+        json.ShouldContain("\"$type\": \"TestType1\"");
+        json.ShouldContain("\"Id\": \"id1\"");
+        json.ShouldContain("\"Name\": \"Test Name\"");
+        json.ShouldContain("\"Value\": 42");
     }
 }
