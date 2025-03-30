@@ -97,6 +97,7 @@ public record DerivedClass : BaseClass;
 ```
 
 Parameters:
+
 - `name`: Custom name for the type (defaults to the class name)
 - `version`: Version of the type (defaults to 1)
 - `baseType`: Base type of the class (optional)
@@ -108,6 +109,7 @@ A marker base record that can be used as the root of polymorphic hierarchies.
 ### PolymorphicSerializationResolver
 
 Extends `DefaultJsonTypeInfoResolver` to handle polymorphic serialization:
+
 - Maintains a registry of type mappers
 - Configures JSON serialization with type discriminators
 - Handles derived type resolution
@@ -123,6 +125,7 @@ var mapper = new PolymorphicSerializationMapper<ConcreteType, BaseType>("TypeDis
 ### PolymorphicHelper
 
 Provides utility methods:
+
 - Default JSON serializer options
 - Type discriminator property name (default: "$type")
 - Helper methods to extract polymorphic type information
