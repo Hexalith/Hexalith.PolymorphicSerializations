@@ -30,6 +30,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{A8AD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeserializeFileMessages", "samples\DeserializeFileMessages\DeserializeFileMessages.csproj", "{B44925BA-26A6-4E8E-BC24-95B8DD0812E6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".project", ".project", "{C4682233-397F-4D7B-9EDF-318E2A38A6E7}"
+	ProjectSection(SolutionItems) = preProject
+		Hexalith.Builds\.clinerules = Hexalith.Builds\.clinerules
+		Hexalith.Builds\.cursorrules = Hexalith.Builds\.cursorrules
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+		DOCUMENTATION.ai.md = DOCUMENTATION.ai.md
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
