@@ -4,7 +4,7 @@ This is a template repository for creating new Hexalith packages. The repository
 
 ## Build Status
 
-[![License: MIT](https://img.shields.io/github/license/hexalith/hexalith.PolymorphicSerializations)](https://github.com/hexalith/hexalith/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/github/license/hexalith/hexalith.PolymorphicSerializations)](https://github.com/hexalith/hexalith.polymorphicserializations/blob/main/LICENSE)
 [![Discord](https://img.shields.io/discord/1063152441819942922?label=Discord&logo=discord&logoColor=white&color=d82679)](https://discordapp.com/channels/1102166958918610994/1102166958918610997)
 
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/31529/badge.svg)](https://scan.coverity.com/projects/hexalith-hexalith-PolymorphicSerializations)
