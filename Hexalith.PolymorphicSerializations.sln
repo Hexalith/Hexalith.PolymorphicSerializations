@@ -21,12 +21,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.PolymorphicSerializations.Tests", "test\Hexalith.PolymorphicSerializations.Tests\Hexalith.PolymorphicSerializations.Tests.csproj", "{A0520529-37CD-4558-8D3C-119DB006D10D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2E1479EA-06ED-4A69-8F50-F17804066FA6}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EDB74E69-759C-4EC4-911B-DF6D777A6CFA}"
+	ProjectSection(SolutionItems) = preProject
+		test\Directory.Build.props = test\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.PolymorphicSerializations.CodeGenerators", "src\Hexalith.PolymorphicSerializations.CodeGenerators\Hexalith.PolymorphicSerializations.CodeGenerators.csproj", "{A2384D54-7F88-42F0-4FD8-D2AB63380DE5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{A8AD055A-A8C2-4689-98B5-F35E20BEF97D}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Directory.Build.Props = samples\Directory.Build.Props
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeserializeFileMessages", "samples\DeserializeFileMessages\DeserializeFileMessages.csproj", "{B44925BA-26A6-4E8E-BC24-95B8DD0812E6}"
 EndProject
