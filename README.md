@@ -41,8 +41,8 @@ This library is particularly useful when dealing with scenarios like:
 
 ## Requirements
 
-- .NET 7.0 or higher
-- System.Text.Json 7.0 or higher
+- .NET 9.0 or higher
+- System.Text.Json 9.0 or higher
 
 ## Installation
 
