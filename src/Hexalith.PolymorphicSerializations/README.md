@@ -1,168 +1,37 @@
 # Hexalith.PolymorphicSerializations
 
-A .NET library that simplifies polymorphic serialization and deserialization using System.Text.Json.
+A library for handling polymorphic serialization and deserialization in .NET applications.
 
 ## Overview
 
-Hexalith.PolymorphicSerializations provides utilities and helpers for handling polymorphic serialization scenarios in .NET applications. It enables type-based JSON serialization and deserialization by managing type discriminators and mapping between base types and their derived implementations.
+This library provides tools to serialize and deserialize polymorphic types, allowing for flexible object hierarchies to be maintained across serialization boundaries. It's particularly useful in systems that need to work with derived types and maintain their specific implementations when converting to and from serialized formats.
+
+## Classes
+
+- **AbstractClassConverter<T>**: A JSON converter that handles serialization and deserialization of abstract classes, preserving their concrete implementations.
+
+- **InterfaceConverter<T>**: A JSON converter specifically designed for interfaces, allowing implementations to be properly serialized and reconstituted.
+
+- **PolymorphicConverter<T>**: Base converter class that provides core functionality for polymorphic type conversion.
+
+- **PolymorphicJsonSerializerOptionsBuilder**: Utility to build JsonSerializerOptions preconfigured with polymorphic serialization support.
+
+- **PolymorphicSerializationOptions**: Configuration options for controlling the behavior of polymorphic serialization.
+
+- **PolymorphicTypeDiscriminatorNamingPolicy**: Defines naming policies for type discriminators used in polymorphic serialization.
+
+- **TypeDiscriminatorAttribute**: An attribute to mark and configure type discriminators for classes participating in polymorphic serialization.
+
+- **TypeDiscriminatorConverter**: Handles the conversion of type discriminators between their serialized and runtime representations.
+
+- **TypeDiscriminatorNameCache**: Provides caching for type discriminator names to improve performance.
 
 ## Features
 
-- Polymorphic serialization and deserialization of object hierarchies
-- Type discrimination using a customizable property name
-- Version-aware type handling
-- Fluent builder API for serialization configuration
-- Custom attribute-based type metadata
+- Type-preserving serialization and deserialization
+- Support for abstract classes and interfaces
+- Customizable type discriminator naming
+- Performance-optimized through caching
+- Compatible with System.Text.Json
 
-## Installation
-
-```bash
-dotnet add package Hexalith.PolymorphicSerializations
-```
-
-## Usage
-
-### Basic Example
-
-```csharp
-using Hexalith.PolymorphicSerializations;
-using System.Text.Json;
-
-// Create JSON serializer options with polymorphic resolution
-JsonSerializerOptions options = new()
-{
-    WriteIndented = true,
-    TypeInfoResolver = new PolymorphicSerializationResolver()
-};
-
-// Serialize polymorphic objects
-string json = JsonSerializer.Serialize(myPolymorphicObject, options);
-
-// Deserialize back to the correct concrete type
-var deserialized = JsonSerializer.Deserialize<BaseType>(json, options);
-```
-
-### Defining Polymorphic Types
-
-Create base types that derive from `PolymorphicRecordBase`:
-
-```csharp
-[DataContract]
-public abstract record Animal : PolymorphicRecordBase
-{
-    public string Name { get; init; }
-}
-
-[PolymorphicSerialization(version: 1)]
-public record Dog(string Name, string Breed) : Animal;
-
-[PolymorphicSerialization(name: "Feline", version: 2)]
-public record Cat(string Name, int Lives) : Animal;
-```
-
-### Registering Type Mappers
-
-Use the builder pattern to register type mappers:
-
-```csharp
-// Create mappers with fluent API
-var mappers = new PolymorphicSerializationResolverBuilder()
-    .AddMapper(new PolymorphicSerializationMapper<Dog, Animal>("Dog"))
-    .AddMapper(new PolymorphicSerializationMapper<Cat, Animal>("FelineV2"))
-    .Build();
-
-// Register mappers globally
-PolymorphicSerializationResolver.TryAddDefaultMappers(mappers);
-```
-
-### Using Default JSON Serializer Options
-
-The library provides default serializer options:
-
-```csharp
-// Use pre-configured default options
-string json = JsonSerializer.Serialize(myAnimal, PolymorphicHelper.DefaultJsonSerializerOptions);
-Animal deserializedAnimal = JsonSerializer.Deserialize<Animal>(json, PolymorphicHelper.DefaultJsonSerializerOptions);
-```
-
-## Key Components
-
-### PolymorphicSerializationAttribute
-
-This attribute provides metadata for a polymorphic class:
-
-```csharp
-[PolymorphicSerialization(name: "CustomName", version: 2, baseType: typeof(BaseClass))]
-public record DerivedClass : BaseClass;
-```
-
-Parameters:
-
-- `name`: Custom name for the type (defaults to the class name)
-- `version`: Version of the type (defaults to 1)
-- `baseType`: Base type of the class (optional)
-
-### PolymorphicRecordBase
-
-A marker base record that can be used as the root of polymorphic hierarchies.
-
-### PolymorphicSerializationResolver
-
-Extends `DefaultJsonTypeInfoResolver` to handle polymorphic serialization:
-
-- Maintains a registry of type mappers
-- Configures JSON serialization with type discriminators
-- Handles derived type resolution
-
-### PolymorphicSerializationMapper
-
-Maps derived types to their base types with type discriminators:
-
-```csharp
-var mapper = new PolymorphicSerializationMapper<ConcreteType, BaseType>("TypeDiscriminator");
-```
-
-### PolymorphicHelper
-
-Provides utility methods:
-
-- Default JSON serializer options
-- Type discriminator property name (default: "$type")
-- Helper methods to extract polymorphic type information
-
-## Advanced Usage
-
-### Custom Type Discrimination
-
-You can extract type information from any type or object instance:
-
-```csharp
-Type myType = typeof(Dog);
-var (name, typeName, version) = myType.GetPolymorphicTypeDiscriminator();
-
-// Or from an instance
-Dog dog = new("Rex", "Golden Retriever");
-var typeInfo = dog.GetPolymorphicTypeDiscriminator();
-```
-
-### Versioning
-
-The library supports versioning of types:
-
-```csharp
-// Version 1 (no suffix)
-[PolymorphicSerialization(version: 1)]
-public record OrderV1 : Order;
-
-// Version 2 (with suffix V2)
-[PolymorphicSerialization(version: 2)]
-public record OrderV2 : Order;
-```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Company
-
-Developed and maintained by [ITANEO](https://www.itaneo.com)
+This library targets .NET Standard 2.0 and .NET 9, ensuring broad compatibility across .NET implementations.
