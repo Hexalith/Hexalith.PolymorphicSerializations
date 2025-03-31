@@ -70,21 +70,30 @@ DeserializeFileMessagesSerialization.RegisterPolymorphicMappers();
 The sample demonstrates how to serialize and deserialize a heterogeneous list of message types:
 
 ```csharp
-List<Polymorphic> list =
+
+DeserializeFileMessagesSerialization.RegisterPolymorphicMappers();
+
+List<object> list =
 [
     new SayHello("World"),
     new SayByeVersion2("World"),
     new Move("A", "B"),
 ];
 
-// Serialize to file
+// Serialize the list to a file
 await File.WriteAllTextAsync("messages.json", JsonSerializer.Serialize(list, PolymorphicHelper.DefaultJsonSerializerOptions));
 
-// Deserialize from file
-list = JsonSerializer.Deserialize<List<Polymorphic>>(
+// Read the list from the file
+List<Polymorphic> objects = JsonSerializer.Deserialize<List<Polymorphic>>(
     await File.ReadAllTextAsync("messages.json"),
     PolymorphicHelper.DefaultJsonSerializerOptions)
     ?? [];
+
+foreach (Polymorphic item in objects)
+{
+    // Print the message
+    Console.WriteLine(JsonSerializer.Serialize<Polymorphic>(item, PolymorphicHelper.DefaultJsonSerializerOptions));
+}
 ```
 
 ## Running the Sample

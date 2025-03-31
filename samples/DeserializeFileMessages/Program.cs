@@ -12,7 +12,7 @@ using Hexalith.PolymorphicSerializations;
 
 DeserializeFileMessagesSerialization.RegisterPolymorphicMappers();
 
-List<Polymorphic> list =
+List<object> list =
 [
     new SayHello("World"),
     new SayByeVersion2("World"),
@@ -23,13 +23,13 @@ List<Polymorphic> list =
 await File.WriteAllTextAsync("messages.json", JsonSerializer.Serialize(list, PolymorphicHelper.DefaultJsonSerializerOptions));
 
 // Read the list from the file
-list = JsonSerializer.Deserialize<List<Polymorphic>>(
+List<Polymorphic> objects = JsonSerializer.Deserialize<List<Polymorphic>>(
     await File.ReadAllTextAsync("messages.json"),
     PolymorphicHelper.DefaultJsonSerializerOptions)
     ?? [];
 
-foreach (Polymorphic item in list)
+foreach (Polymorphic item in objects)
 {
     // Print the message
-    Console.WriteLine(JsonSerializer.Serialize(item, PolymorphicHelper.DefaultJsonSerializerOptions));
+    Console.WriteLine(JsonSerializer.Serialize<Polymorphic>(item, PolymorphicHelper.DefaultJsonSerializerOptions));
 }

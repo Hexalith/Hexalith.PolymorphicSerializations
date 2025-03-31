@@ -105,8 +105,8 @@ using Hexalith.PolymorphicSerializations;
 // This connects your model classes to the serialization system
 MyProject.RegisterPolymorphicMappers();
 
-// Serialize the Car object
-string json = JsonSerializer.Serialize(new Car("Volvo", "Electric"), PolymorphicHelper.DefaultJsonSerializerOptions);
+// Serialize the Car object. You need to specify polymorphic deserialization by using the Polymorphic type.
+string json = JsonSerializer.Serialize<Polymorphic>(new Car("Volvo", "Electric"), PolymorphicHelper.DefaultJsonSerializerOptions);
 
 // Deserialize the Car object. You need to specify polymorphic deserialization by using the Polymorphic type.
 var value = JsonSerializer.Deserialize<Polymorphic>(json, PolymorphicHelper.DefaultJsonSerializerOptions);
