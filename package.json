@@ -1,8 +1,8 @@
 {
-  "name": "hexalith-PolymorphicSerializations",
+  "name": "hexalith-polymorphic-serializations",
   "version": "0.0.0-development",
   "private": true,
-  "description": "Hexalith PolymorphicSerializations libraries",
+  "description": "Hexalith Polymorphic Serializations libraries",
   "repository": {
     "type": "git",
     "url": "https://github.com/Hexalith/Hexalith.PolymorphicSerializations.git"
