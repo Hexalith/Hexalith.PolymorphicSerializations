@@ -28,14 +28,21 @@ This library is particularly useful when dealing with scenarios like:
 - Message Queues (sending/receiving various message types)
 - APIs returning different response types based on context
 - Configuration systems loading diverse component types
+- NoSQL Databases
 
-## Key Features
+## Features
 
-- **Easy Configuration:** Simplified setup for `System.Text.Json` to handle polymorphic types.
-- **Flexible Type Discrimination:** Supports various strategies to identify derived types during deserialization (e.g., using a type discriminator property like `$type`).
-- **Automatic Type Discovery:** Can automatically find and register derived types within specified assemblies.
-- **Customizable:** Allows for custom converters and fine-grained control over serialization behavior.
-- **Integration:** Designed to work smoothly within the Hexalith ecosystem and standard .NET applications.
+- **Type Discrimination** - Automatically includes type information in serialized JSON to ensure proper deserialization.
+- **Custom Type Resolution** - Flexible system for mapping between .NET types and JSON discriminator values.
+- **Minimal Configuration** - Simple attribute-based setup with reasonable defaults.
+- **High Performance** - Built on the high-performance `System.Text.Json` serialization engine.
+- **Framework Agnostic** - Works with any .NET application using .NET Standard 2.0 or higher.
+- **No External Dependencies** - Only depends on `System.Text.Json`.
+
+## Requirements
+
+- .NET 7.0 or higher
+- System.Text.Json 7.0 or higher
 
 ## Installation
 
@@ -45,112 +52,141 @@ Install the package via NuGet Package Manager or the .NET CLI:
 dotnet add package Hexalith.PolymorphicSerializations
 ```
 
-## Getting Started
+## Quick Start
 
-Here's a basic example demonstrating how to set up and use polymorphic serialization:
-
-**1. Define Your Types:**
-
-Create a base type (or interface) and derived types.
+### 1. Define your class hierarchy
 
 ```csharp
-// Define a base record (or class/interface)
-[JsonPolymorphic] // Mark the base type for polymorphic serialization
-[JsonDerivedType(typeof(Dog), typeDiscriminator: "dog")] // Register derived type Dog
-[JsonDerivedType(typeof(Cat), typeDiscriminator: "cat")] // Register derived type Cat
-public record Animal(string Name);
+// Base class or interface
+public abstract class Animal
+{
+    public string Name { get; set; }
+}
 
-// Define derived records
-public record Dog(string Name, string Breed) : Animal(Name);
-public record Cat(string Name, bool IsLazy) : Animal(Name);
+// Derived classes
+public class Dog : Animal
+{
+    public string Breed { get; set; }
+    public bool IsGoodBoy { get; set; } = true;
+}
+
+public class Cat : Animal
+{
+    public bool LikesCatnip { get; set; }
+    public int LivesRemaining { get; set; } = 9;
+}
 ```
-*Note: Using `[JsonPolymorphic]` and `[JsonDerivedType]` attributes (available in .NET 7+) is the standard way. This library provides additional configuration flexibility, especially for scenarios where attributes are not feasible or for older .NET versions.*
 
-**2. Configure JsonSerializerOptions:**
-
-While the attributes handle basic cases, for more complex scenarios or assembly scanning, you might configure `JsonSerializerOptions` using helpers (if provided by the library - *adjust based on actual library features*).
+### 2. Configure serialization with attributes
 
 ```csharp
-// Example assuming a helper method exists (adapt based on actual library API)
-// JsonSerializerOptions options = new JsonSerializerOptions();
-// options.AddPolymorphicTypeConversion(config => {
-//      config.ScanAssemblies(typeof(Animal).Assembly); // Auto-discover types
-//      // Or manually register types
-//      // config.Register<Animal>()
-//      //       .WithDerived<Dog>("dog")
-//      //       .WithDerived<Cat>("cat");
-// });
+// Add discriminator attribute to the base class
+[PolymorphicType]
+public abstract class Animal
+{
+    public string Name { get; set; }
+    
+    // Optional: Override the discriminator property name (default is "$type")
+    [PolymorphicTypeDiscriminator]
+    public string Kind { get; set; }
+}
+
+// Add type information to derived classes
+[PolymorphicTypeValue("dog")]
+public class Dog : Animal
+{
+    public string Breed { get; set; }
+    public bool IsGoodBoy { get; set; } = true;
+}
+
+[PolymorphicTypeValue("cat")]
+public class Cat : Animal
+{
+    public bool LikesCatnip { get; set; }
+    public int LivesRemaining { get; set; } = 9;
+}
 ```
-*(Self-correction: The standard .NET attributes `[JsonPolymorphic]` and `[JsonDerivedType]` handle this directly. The library likely provides converters or helpers for scenarios *not* covered by attributes or for alternative configuration methods. The README should clarify the library's specific additions/advantages over the built-in attributes.)*
 
-**3. Serialize and Deserialize:**
-
-Use the configured `JsonSerializerOptions` (or rely on the attributes) for serialization and deserialization.
+### 3. Register the converter with System.Text.Json
 
 ```csharp
 using System.Text.Json;
+using Hexalith.PolymorphicSerializations.Json;
 
-// ... (Define Animal, Dog, Cat as above)
-
-JsonSerializerOptions options = new()
+// Configure JsonSerializerOptions
+var options = new JsonSerializerOptions
 {
-    // Ensure options are configured if not solely relying on attributes
-    // Add converters from Hexalith.PolymorphicSerializations if needed
-    WriteIndented = true // For readability
+    WriteIndented = true
 };
 
-List<Animal> animals = new()
+// Register the polymorphic converter
+options.Converters.Add(new PolymorphicJsonConverter());
+
+// Now you can serialize and deserialize
+var dog = new Dog { Name = "Rex", Breed = "German Shepherd" };
+string json = JsonSerializer.Serialize<Animal>(dog, options);
+// Result: {"Name":"Rex","Kind":"dog","Breed":"German Shepherd","IsGoodBoy":true}
+
+Animal deserializedAnimal = JsonSerializer.Deserialize<Animal>(json, options);
+// deserializedAnimal will be a Dog instance with proper properties
+```
+
+## Advanced Usage
+
+### Using with Dependency Injection
+
+```csharp
+// In your startup.cs or program.cs
+services.AddPolymorphicJsonConverters();
+
+// Then in your services:
+public class MyService
 {
-    new Dog("Buddy", "Golden Retriever"),
-    new Cat("Whiskers", true)
-};
-
-// Serialize
-string json = JsonSerializer.Serialize<List<Animal>>(animals, options);
-Console.WriteLine("Serialized JSON:");
-Console.WriteLine(json);
-// Output:
-// [
-//   {
-//     "$type": "dog", // Discriminator added automatically if using attributes
-//     "Breed": "Golden Retriever",
-//     "Name": "Buddy"
-//   },
-//   {
-//     "$type": "cat",
-//     "IsLazy": true,
-//     "Name": "Whiskers"
-//   }
-// ]
-
-
-// Deserialize
-List<Animal>? deserializedAnimals = JsonSerializer.Deserialize<List<Animal>>(json, options);
-
-if (deserializedAnimals != null)
-{
-    foreach (Animal animal in deserializedAnimals)
+    private readonly JsonSerializerOptions _options;
+    
+    public MyService(IOptions<JsonSerializerOptions> options)
     {
-        Console.WriteLine($"Deserialized Animal: Name={animal.Name}, Type={animal.GetType().Name}");
-        if (animal is Dog dog)
-        {
-            Console.WriteLine($"  Breed: {dog.Breed}");
-        }
-        else if (animal is Cat cat)
-        {
-            Console.WriteLine($"  Is Lazy: {cat.IsLazy}");
-        }
+        _options = options.Value;
+    }
+    
+    public string SerializeObject<T>(T obj)
+    {
+        return JsonSerializer.Serialize(obj, _options);
     }
 }
 ```
 
-## Advanced Topics
+### Custom Type Resolution
 
-*(This section can be expanded based on the specific features and complexity demonstrated in the samples)*
+```csharp
+// Creating a custom type resolver
+public class CustomAnimalTypeResolver : IPolymorphicTypeResolver
+{
+    public Type ResolveType(string discriminator)
+    {
+        return discriminator switch
+        {
+            "canine" => typeof(Dog),
+            "feline" => typeof(Cat),
+            _ => throw new JsonException($"Unknown animal type: {discriminator}")
+        };
+    }
+    
+    public string ResolveDiscriminator(Type type)
+    {
+        if (type == typeof(Dog)) return "canine";
+        if (type == typeof(Cat)) return "feline";
+        throw new JsonException($"Unknown animal type: {type.Name}");
+    }
+}
 
-- **Type Discrimination:** Discuss different strategies supported (e.g., default `$type`, custom discriminators).
-- **Custom Converters:** Explain how to integrate custom `JsonConverter` instances if the library provides hooks for them.
-- **Configuration:** Detail specific configuration options or helper methods provided by the library.
+// Register your custom resolver
+var options = new JsonSerializerOptions();
+options.Converters.Add(new PolymorphicJsonConverter
+{
+    TypeResolvers = { new CustomAnimalTypeResolver() }
+});
+```
 
 ## Sample Application
 
@@ -180,7 +216,35 @@ Hexalith.PolymorphicSerializations/
 
 ## Contributing
 
-Contributions are welcome! Please refer to the contribution guidelines (link to be added if a CONTRIBUTING.md exists) for details on how to submit pull requests, report issues, or suggest features.
+Contributions are welcome! Here's how you can contribute:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please ensure your code follows the project's coding standards and includes appropriate tests.
+
+## Troubleshooting
+
+### Common Issues
+
+- **Type not recognized during deserialization**: Ensure you've applied the correct attributes and registered the converter with your JsonSerializerOptions.
+- **Missing type discriminator**: Check that your base class has the [PolymorphicType] attribute.
+- **Serialization exceptions**: Verify that all derived types have the [PolymorphicTypeValue] attribute with unique discriminator values.
+
+### Debugging Tips
+
+Enable detailed logging for System.Text.Json to troubleshoot serialization issues:
+
+```csharp
+var options = new JsonSerializerOptions
+{
+    WriteIndented = true,
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+};
+```
 
 ## License
 
