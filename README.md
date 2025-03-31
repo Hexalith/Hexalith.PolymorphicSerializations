@@ -108,8 +108,8 @@ MyProject.RegisterPolymorphicMappers();
 // Serialize the Car object
 string json = JsonSerializer.Serialize(new Car("Volvo", "Electric"), PolymorphicHelper.DefaultJsonSerializerOptions);
 
-// Deserialize the Car object. You need to specify polymorphic deserialization by using the PolymorphicRecordBase type.
-var value = JsonSerializer.Deserialize<PolymorphicRecordBase>(json, PolymorphicHelper.DefaultJsonSerializerOptions);
+// Deserialize the Car object. You need to specify polymorphic deserialization by using the Polymorphic type.
+var value = JsonSerializer.Deserialize<Polymorphic>(json, PolymorphicHelper.DefaultJsonSerializerOptions);
 ```
 
 ## Sample Application

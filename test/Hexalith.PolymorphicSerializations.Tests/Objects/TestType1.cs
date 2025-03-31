@@ -10,4 +10,4 @@ namespace Hexalith.PolymorphicSerializations.Tests.Objects;
 /// <param name="Id">The unique identifier.</param>
 /// <param name="Name">The name property specific to TestType1.</param>
 /// <param name="Value">The value property specific to TestType1.</param>
-public record TestType1(string Id, string Name, int Value) : PolymorphicRecordBase;
+public record TestType1(string Id, string Name, int Value) : Polymorphic;

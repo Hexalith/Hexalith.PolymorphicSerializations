@@ -28,7 +28,7 @@ public class PolymorphicSerializationTests
     public PolymorphicSerializationTests()
     {
         // Register the mappers
-        PolymorphicSerializationResolver.TryAddDefaultMapper(new PolymorphicSerializationMapper<TestType1, PolymorphicRecordBase>("TestType1"));
+        PolymorphicSerializationResolver.TryAddDefaultMapper(new PolymorphicSerializationMapper<TestType1, Polymorphic>("TestType1"));
 
         // Configure the options
         _options = new JsonSerializerOptions
@@ -56,7 +56,7 @@ public class PolymorphicSerializationTests
         """;
 
         // Act & Assert
-        PolymorphicRecordBase? result = JsonSerializer.Deserialize<PolymorphicRecordBase>(json, _options);
+        Polymorphic? result = JsonSerializer.Deserialize<Polymorphic>(json, _options);
 
         // Assert
         _ = result.ShouldNotBeNull();
@@ -79,7 +79,7 @@ public class PolymorphicSerializationTests
         """;
 
         // Act
-        PolymorphicRecordBase? result = JsonSerializer.Deserialize<PolymorphicRecordBase>(json, _options);
+        Polymorphic? result = JsonSerializer.Deserialize<Polymorphic>(json, _options);
 
         // Assert
         _ = result.ShouldNotBeNull();
@@ -107,7 +107,7 @@ public class PolymorphicSerializationTests
         """;
 
         // Act & Assert
-        _ = Should.Throw<JsonException>(() => JsonSerializer.Deserialize<PolymorphicRecordBase>(json, _options));
+        _ = Should.Throw<JsonException>(() => JsonSerializer.Deserialize<Polymorphic>(json, _options));
     }
 
     /// <summary>
@@ -138,7 +138,24 @@ public class PolymorphicSerializationTests
         NonRegisteredType value = new("ABC123", "Test Title");
 
         // Act & Assert
-        _ = Should.Throw<NotSupportedException>(() => JsonSerializer.Serialize<PolymorphicRecordBase>(value, _options));
+        _ = Should.Throw<NotSupportedException>(() => JsonSerializer.Serialize<Polymorphic>(value, _options));
+    }
+
+    /// <summary>
+    /// Tests non-registered type to ensure it throws a JsonException during serialization.
+    /// </summary>
+    [Fact]
+    public void Serialize_NonRegisteredTypeWithoutBaseType_Succeeds()
+    {
+        // Arrange
+        NonRegisteredType value = new("ABC123", "Test Title");
+
+        // Act & Assert
+        string json = JsonSerializer.Serialize(value, _options);
+
+        // Assert
+        json.ShouldContain("\"Code\": \"ABC123\"");
+        json.ShouldContain("\"Title\": \"Test Title\"");
     }
 
     /// <summary>
@@ -151,7 +168,7 @@ public class PolymorphicSerializationTests
         TestType1 value = new("id1", "Test Name", 42);
 
         // Act
-        string json = JsonSerializer.Serialize<PolymorphicRecordBase>(value, _options);
+        string json = JsonSerializer.Serialize<Polymorphic>(value, _options);
 
         // Assert
         json.ShouldContain("\"$type\": \"TestType1\"");

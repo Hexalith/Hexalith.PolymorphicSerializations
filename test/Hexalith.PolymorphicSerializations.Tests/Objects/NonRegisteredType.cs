@@ -10,4 +10,4 @@ namespace Hexalith.PolymorphicSerializations.Tests.Objects;
 /// </summary>
 /// <param name="Code">The code value.</param>
 /// <param name="Title">The title value.</param>
-public record NonRegisteredType(string Code, string Title) : PolymorphicRecordBase;
+public record NonRegisteredType(string Code, string Title) : Polymorphic;

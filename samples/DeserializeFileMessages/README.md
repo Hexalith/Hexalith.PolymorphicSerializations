@@ -29,7 +29,7 @@ The sample demonstrates two message hierarchies:
    - `SayHello`: A simple hello message
    - `SayByeVersion2`: A versioned goodbye message 
 
-2. `Move`: A standalone message type directly inheriting from `PolymorphicRecordBase`
+2. `Move`: A standalone message type directly inheriting from `Polymorphic`
 
 ## Key Features Demonstrated
 
@@ -70,7 +70,7 @@ DeserializeFileMessagesSerialization.RegisterPolymorphicMappers();
 The sample demonstrates how to serialize and deserialize a heterogeneous list of message types:
 
 ```csharp
-List<PolymorphicRecordBase> list =
+List<Polymorphic> list =
 [
     new SayHello("World"),
     new SayByeVersion2("World"),
@@ -81,7 +81,7 @@ List<PolymorphicRecordBase> list =
 await File.WriteAllTextAsync("messages.json", JsonSerializer.Serialize(list, PolymorphicHelper.DefaultJsonSerializerOptions));
 
 // Deserialize from file
-list = JsonSerializer.Deserialize<List<PolymorphicRecordBase>>(
+list = JsonSerializer.Deserialize<List<Polymorphic>>(
     await File.ReadAllTextAsync("messages.json"),
     PolymorphicHelper.DefaultJsonSerializerOptions)
     ?? [];
