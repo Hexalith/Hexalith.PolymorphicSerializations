@@ -8,11 +8,11 @@ This library provides tools to serialize and deserialize polymorphic types, allo
 
 ## Classes
 
-- **AbstractClassConverter<T>**: A JSON converter that handles serialization and deserialization of abstract classes, preserving their concrete implementations.
+- **AbstractClassConverter\<T\>**: A JSON converter that handles serialization and deserialization of abstract classes, preserving their concrete implementations.
 
-- **InterfaceConverter<T>**: A JSON converter specifically designed for interfaces, allowing implementations to be properly serialized and reconstituted.
+- **InterfaceConverter\<T\>**: A JSON converter specifically designed for interfaces, allowing implementations to be properly serialized and reconstituted.
 
-- **PolymorphicConverter<T>**: Base converter class that provides core functionality for polymorphic type conversion.
+- **PolymorphicConverter\<T\>**: Base converter class that provides core functionality for polymorphic type conversion.
 
 - **PolymorphicJsonSerializerOptionsBuilder**: Utility to build JsonSerializerOptions preconfigured with polymorphic serialization support.
 
