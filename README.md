@@ -121,22 +121,12 @@ For more detailed usage examples and demonstrations of various features, explore
 
 ## Repository Structure
 
-```text
-Hexalith.PolymorphicSerializations/
-├── .github/             # GitHub workflows and configurations
-├── Hexalith.Builds/     # Shared build configurations (submodule)
-├── src/                 # Source code for the library
-├── test/                # Unit and integration tests
-├── samples/             # Sample applications demonstrating usage
-├── .gitignore           # Git ignore file
-├── .gitmodules          # Git submodules configuration
-├── Directory.Build.props # MSBuild properties shared across projects
-├── Directory.Packages.props # Central package management
-├── Hexalith.PolymorphicSerializations.sln # Solution file
-├── LICENSE              # MIT License
-├── README.md            # This file
-└── initialize.ps1       # Initialization script
-```
+The repository is organized as follows:
+
+- [src](./src/README.md) Is the source code directory where you will add your package projects.
+- [test](./test/README.md) Contains test projects for your packages.
+- [examples](./examples/README.md) Contains example implementations of your packages.
+- [Hexalith.Builds](./Hexalith.Builds/README.md) Contains shared build configurations and tools.
 
 ## Contributing
 
