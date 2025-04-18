@@ -12,13 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Hexalith.PolymorphicSerializations\Hexalith.PolymorphicSerializations.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Hexalith.PolymorphicSerializations.CodeGenerators\Hexalith.PolymorphicSerializations.CodeGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 </Project>
