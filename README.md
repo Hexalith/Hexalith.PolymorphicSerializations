@@ -152,3 +152,31 @@ Please ensure your code follows the project's coding standards and includes appr
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Usage as an Analyzer Package
+
+When referencing the Hexalith.PolymorphicSerializations.CodeGenerators package in your projects, ensure you set it up correctly to work as an analyzer:
+
+```xml
+<ItemGroup>
+  <!-- Reference the main package -->
+  <PackageReference Include="Hexalith.PolymorphicSerializations" />
+  
+  <!-- Reference the CodeGenerators package as an analyzer -->
+  <PackageReference Include="Hexalith.PolymorphicSerializations.CodeGenerators" PrivateAssets="all" />
+</ItemGroup>
+```
+
+The `PrivateAssets="all"` attribute is critical for the source generator to work properly, ensuring that the analyzer is only used during compilation and isn't referenced by consumers of your assembly.
+
+If you continue to have issues with the analyzer not being detected, you can try adding this more explicit reference:
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Hexalith.PolymorphicSerializations" />
+  <PackageReference Include="Hexalith.PolymorphicSerializations.CodeGenerators" PrivateAssets="all" GeneratePathProperty="true" />
+  <Analyzer Include="$(PkgHexalith_PolymorphicSerializations_CodeGenerators)\analyzers\dotnet\cs\Hexalith.PolymorphicSerializations.CodeGenerators.dll" />
+</ItemGroup>
+```
+
+Make sure to rebuild your solution after making these changes.

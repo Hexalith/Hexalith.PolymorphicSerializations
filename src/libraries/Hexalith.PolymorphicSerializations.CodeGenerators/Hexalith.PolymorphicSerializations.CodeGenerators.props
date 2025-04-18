@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+  <!-- 
+    This file is automatically imported by NuGet into a user's project when it installs the package.
+    It ensures that the analyzer is properly configured for the consuming project.
+  -->
+  
+  <ItemGroup>
+    <!-- Add the analyzer from the package -->
+    <Analyzer Include="$(MSBuildThisFileDirectory)\..\analyzers\dotnet\cs\Hexalith.PolymorphicSerializations.CodeGenerators.dll" />
+  </ItemGroup>
+</Project> 
