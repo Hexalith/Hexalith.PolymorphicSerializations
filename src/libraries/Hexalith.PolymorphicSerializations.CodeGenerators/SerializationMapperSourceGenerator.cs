@@ -219,7 +219,7 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
             : (string)nameParam.Value;
 
         int version = versionParam.Value == null ? 1 : (int)versionParam.Value;
-        string typeDiscriminator = /*PolymorphicSerializationAttribute.*/GetTypeName(name, version);
+        string typeDiscriminator = GetTypeName(name, version);
         string inheritance = hasParent ? string.Empty : " : Polymorphic";
 
         return $$"""
