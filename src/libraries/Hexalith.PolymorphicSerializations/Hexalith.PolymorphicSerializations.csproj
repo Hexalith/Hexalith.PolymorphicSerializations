@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <PackageId>Hexalith.PolymorphicSerializations</PackageId>
     <Description>Hexalith PolymorphicSerializations utilities and helpers</Description>
     <PackageProjectUrl>https://github.com/Hexalith/Hexalith.PolymorphicSerializations</PackageProjectUrl>

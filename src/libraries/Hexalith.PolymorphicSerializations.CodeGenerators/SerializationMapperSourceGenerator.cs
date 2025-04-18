@@ -42,6 +42,12 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
             => Execute(source.Item1, source.Item2, spc));
     }
 
+    /// <summary>
+    /// Executes the source generation process.
+    /// </summary>
+    /// <param name="compilation">The compilation context.</param>
+    /// <param name="classesOrRecords">The collection of class/record declarations and their attribute data.</param>
+    /// <param name="context">The source production context.</param>
     private static void Execute(
         Compilation compilation,
         ImmutableArray<(TypeDeclarationSyntax? Type, AttributeData? Data)> classesOrRecords,
@@ -78,6 +84,11 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
         }
     }
 
+    /// <summary>
+    /// Generates the source code for the dependency injection extension method.
+    /// </summary>
+    /// <param name="symbols">The list of named type symbols to include.</param>
+    /// <returns>The generated C# code as a string, or an empty string if no symbols are provided.</returns>
     private static string GenerateAddServicesExtension(List<INamedTypeSymbol> symbols)
     {
         if (symbols.Count == 0)
@@ -141,6 +152,14 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
                          """;
     }
 
+    /// <summary>
+    /// Generates the source code for a specific mapper class.
+    /// </summary>
+    /// <param name="syntax">The syntax and attribute data for the class/record.</param>
+    /// <param name="classSymbol">The named type symbol for the class/record.</param>
+    /// <param name="namespaceName">The namespace of the class/record.</param>
+    /// <param name="context">The source production context.</param>
+    /// <returns>The generated C# code for the mapper class as a string.</returns>
     private static string GenerateMapperClass(
         (TypeDeclarationSyntax Type, AttributeData Data) syntax,
         INamedTypeSymbol classSymbol,
@@ -231,6 +250,11 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
                  """;
     }
 
+    /// <summary>
+    /// Gets the semantic target (class/record declaration and attribute data) for generation.
+    /// </summary>
+    /// <param name="context">The generator attribute syntax context.</param>
+    /// <returns>A tuple containing the type declaration syntax and attribute data, or (null, null) if not applicable.</returns>
     private static (TypeDeclarationSyntax? Type, AttributeData? Data) GetSemanticTargetForGeneration(
         GeneratorAttributeSyntaxContext context)
     {
@@ -245,6 +269,12 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
         return (classDeclaration, attribute);
     }
 
+    /// <summary>
+    /// Gets the type name based on name and version.
+    /// </summary>
+    /// <param name="name">The base name.</param>
+    /// <param name="version">The version number.</param>
+    /// <returns>The formatted type name (e.g., "MyType" or "MyTypeV2").</returns>
     private static string GetTypeName(string name, int version)
             => version < 2 ? name : $"{name}V{version}";
 }

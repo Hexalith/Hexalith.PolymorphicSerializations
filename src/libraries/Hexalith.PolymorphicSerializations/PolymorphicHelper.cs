@@ -19,6 +19,7 @@ public static class PolymorphicHelper
     /// <summary>
     /// Gets the default JSON serializer options.
     /// </summary>
+    /// <value>The default JSON serializer options.</value>
     public static JsonSerializerOptions DefaultJsonSerializerOptions => _defaultJsonSerializerOptions ??=
         new()
         {
@@ -31,6 +32,7 @@ public static class PolymorphicHelper
     /// <summary>
     /// Gets the discriminator for polymorphic serialization.
     /// </summary>
+    /// <value>The discriminator for polymorphic serialization.</value>
     public static string Discriminator => "$type";
 
     /// <summary>

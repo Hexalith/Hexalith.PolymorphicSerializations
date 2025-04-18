@@ -10,11 +10,18 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization.Metadata;
 
 /// <summary>
-/// Resolves the polymorphic serialization for JSON.
+/// Builder class for collecting polymorphic serialization mappers.
 /// </summary>
-public class PolymorphicSerializationResolverBuilder : DefaultJsonTypeInfoResolver
+public class PolymorphicSerializationResolverBuilder
 {
     private readonly List<IPolymorphicSerializationMapper> _serializationMappers = [];
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PolymorphicSerializationResolverBuilder"/> class.
+    /// </summary>
+    public PolymorphicSerializationResolverBuilder()
+    {
+    }
 
     /// <summary>
     /// Adds a serialization mapper to the builder.
@@ -34,8 +41,8 @@ public class PolymorphicSerializationResolverBuilder : DefaultJsonTypeInfoResolv
     }
 
     /// <summary>
-    /// Builds the PolymorphicSerializationResolver instance.
+    /// Builds the collection of collected serialization mappers.
     /// </summary>
-    /// <returns>A new instance of PolymorphicSerializationResolver.</returns>
+    /// <returns>An enumerable collection of <see cref="IPolymorphicSerializationMapper"/>.</returns>
     public IEnumerable<IPolymorphicSerializationMapper> Build() => _serializationMappers;
 }

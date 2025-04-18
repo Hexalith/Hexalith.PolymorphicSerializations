@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\libraries\Hexalith.PolymorphicSerializations.CodeGenerators\Hexalith.PolymorphicSerializations.CodeGenerators.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\src\libraries\Hexalith.PolymorphicSerializations\Hexalith.PolymorphicSerializations.csproj" />
+  </ItemGroup>
 </Project>

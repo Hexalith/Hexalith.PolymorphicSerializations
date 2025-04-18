@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <Description>Hexalith Polymorphic Serializations utilities and helpers</Description>
+    <PackageProjectUrl>https://github.com/Hexalith/Hexalith.PolymorphicSerializations</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Hexalith/Hexalith.PolymorphicSerializations</RepositoryUrl>
+    <PackageTags>$(PackageTags);Polymorphic;Serialization;</PackageTags>
+    <!-- Define a property to store the path of the parent Directory.Build.props. -->
+    <ParentDirectoryBuildProps>$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))</ParentDirectoryBuildProps>
+  </PropertyGroup>
+
+  <!-- Import the parent Directory.Build.props file if it exists -->
+  <Import Project="$(ParentDirectoryBuildProps)" Condition="Exists('$(ParentDirectoryBuildProps)')" />
+
+  <!-- Import the Hexalith.Package.props file in Hexalith.Builds. This file must exist. -->
+  <Import Project="$(MSBuildThisFileDirectory)../../Hexalith.Builds/Hexalith.Package.props" />
+</Project>

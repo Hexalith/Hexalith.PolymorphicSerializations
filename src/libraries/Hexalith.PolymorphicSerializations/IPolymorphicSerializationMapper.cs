@@ -16,10 +16,12 @@ public interface IPolymorphicSerializationMapper
     /// <summary>
     /// Gets the base type.
     /// </summary>
+    /// <value>The base type.</value>
     Type Base { get; }
 
     /// <summary>
     /// Gets the Json derived type.
     /// </summary>
+    /// <value>The Json derived type.</value>
     JsonDerivedType JsonDerivedType { get; }
 }

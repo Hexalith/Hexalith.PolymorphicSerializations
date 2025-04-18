@@ -51,6 +51,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.PolymorphicSeriali
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.PolymorphicSerializations", "src\libraries\Hexalith.PolymorphicSerializations\Hexalith.PolymorphicSerializations.csproj", "{619C9310-53A6-7B91-B573-0BAF79E4F0A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libraries", "libraries", "{FE28C73F-D023-45A9-9C60-992A788915B5}"
+	ProjectSection(SolutionItems) = preProject
+		src\libraries\Directory.Build.props = src\libraries\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{9F0F8DD6-1DB2-4845-9690-0077E705A7F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hexalith.Builds", "Hexalith.Builds", "{CE91521C-E960-4F8C-BE5E-FB392352567D}"
+	ProjectSection(SolutionItems) = preProject
+		Hexalith.Builds\ai-assistant-instructions.md = Hexalith.Builds\ai-assistant-instructions.md
+		Hexalith.Builds\ai-commit-prompt.md = Hexalith.Builds\ai-commit-prompt.md
+		Hexalith.Builds\Hexalith.Build.props = Hexalith.Builds\Hexalith.Build.props
+		Hexalith.Builds\Hexalith.globalconfig = Hexalith.Builds\Hexalith.globalconfig
+		Hexalith.Builds\Hexalith.Package.props = Hexalith.Builds\Hexalith.Package.props
+		Hexalith.Builds\icon.png = Hexalith.Builds\icon.png
+		Hexalith.Builds\LICENSE = Hexalith.Builds\LICENSE
+		Hexalith.Builds\package.json = Hexalith.Builds\package.json
+		Hexalith.Builds\README.md = Hexalith.Builds\README.md
+		Hexalith.Builds\stylecop.json = Hexalith.Builds\stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Props", "Props", "{63C3AFEF-8751-426A-AFB4-21EEDB348E49}"
+	ProjectSection(SolutionItems) = preProject
+		Hexalith.Builds\Props\Directory.Packages.props = Hexalith.Builds\Props\Directory.Packages.props
+		Hexalith.Builds\Props\Environment.Build.props = Hexalith.Builds\Props\Environment.Build.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,8 +108,11 @@ Global
 		{3929FBF6-EDA1-4CA7-8541-C460D0DCE449} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A0520529-37CD-4558-8D3C-119DB006D10D} = {EDB74E69-759C-4EC4-911B-DF6D777A6CFA}
 		{BDF68FD2-6C40-D361-A582-29F076BB77DC} = {A8AD055A-A8C2-4689-98B5-F35E20BEF97D}
-		{E8667DFA-C89F-6A48-6734-579B781BBC90} = {2E1479EA-06ED-4A69-8F50-F17804066FA6}
-		{619C9310-53A6-7B91-B573-0BAF79E4F0A3} = {2E1479EA-06ED-4A69-8F50-F17804066FA6}
+		{E8667DFA-C89F-6A48-6734-579B781BBC90} = {FE28C73F-D023-45A9-9C60-992A788915B5}
+		{619C9310-53A6-7B91-B573-0BAF79E4F0A3} = {FE28C73F-D023-45A9-9C60-992A788915B5}
+		{FE28C73F-D023-45A9-9C60-992A788915B5} = {2E1479EA-06ED-4A69-8F50-F17804066FA6}
+		{CE91521C-E960-4F8C-BE5E-FB392352567D} = {9F0F8DD6-1DB2-4845-9690-0077E705A7F8}
+		{63C3AFEF-8751-426A-AFB4-21EEDB348E49} = {CE91521C-E960-4F8C-BE5E-FB392352567D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B7376F4-B33A-4BC6-AFCA-C09B437568D7}

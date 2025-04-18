@@ -9,29 +9,30 @@ using System;
 
 /// <summary>
 /// Represents a custom attribute used to provide metadata for a message.
+/// Initializes a new instance of the <see cref="PolymorphicSerializationAttribute"/> class.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="PolymorphicSerializationAttribute"/> class with the specified name, major version, and minor version.
-/// </remarks>
-/// <param name="name">The name of the message.</param>
-/// <param name="version">The version of the message.</param>
-/// <param name="baseType">The base type of the message.</param>
+/// <param name="name">The name of the message. If null, the class name is used.</param>
+/// <param name="version">The version of the message. Defaults to 1.</param>
+/// <param name="baseType">The base type for polymorphism. If null, the direct base class is used.</param>
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public sealed class PolymorphicSerializationAttribute(string? name = null, int version = 1, Type? baseType = null) : Attribute
 {
     /// <summary>
     /// Gets the base type.
     /// </summary>
+    /// <value>The base type.</value>
     public Type? BaseType { get; } = baseType;
 
     /// <summary>
     /// Gets the name of the message.
     /// </summary>
+    /// <value>The name of the message.</value>
     public string? Name { get; } = name;
 
     /// <summary>
     /// Gets the version of the message.
     /// </summary>
+    /// <value>The version of the message.</value>
     public int Version { get; } = version;
 
     /// <summary>
