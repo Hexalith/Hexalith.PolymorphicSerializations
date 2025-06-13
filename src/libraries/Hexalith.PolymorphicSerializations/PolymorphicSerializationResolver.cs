@@ -70,8 +70,7 @@ public class PolymorphicSerializationResolver : DefaultJsonTypeInfoResolver
                 IgnoreUnrecognizedTypeDiscriminators = false,
                 UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization,
             };
-            IEnumerable<JsonDerivedType> derivedTypes = mappers.Select(p => p.JsonDerivedType).Distinct();
-            foreach (JsonDerivedType derivedType in derivedTypes)
+            foreach (JsonDerivedType derivedType in mappers.Select(p => p.JsonDerivedType).Distinct())
             {
                 jsonTypeInfo.PolymorphismOptions.DerivedTypes.Add(derivedType);
             }

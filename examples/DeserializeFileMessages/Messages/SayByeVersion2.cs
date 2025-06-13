@@ -10,5 +10,6 @@ using Hexalith.PolymorphicSerializations;
 /// <summary>
 /// SayBye message.
 /// </summary>
+/// <param name="To">The recipient of the message.</param>
 [PolymorphicSerialization(baseType: typeof(Say), version: 2, name: "Bye")]
 public partial record SayByeVersion2(string To) : Say(To);

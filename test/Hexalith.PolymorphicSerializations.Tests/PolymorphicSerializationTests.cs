@@ -44,7 +44,7 @@ public class PolymorphicSerializationTests
     /// Tests that the discriminator is required.
     /// </summary>
     [Fact]
-    public void Deserialize_MissingDiscriminator_ReturnsBaseType()
+    public void DeserializeMissingDiscriminatorReturnsBaseType()
     {
         // Arrange
         const string json = """
@@ -66,7 +66,7 @@ public class PolymorphicSerializationTests
     /// Tests that a base class can be correctly deserialized into its specific derived type.
     /// </summary>
     [Fact]
-    public void Deserialize_TestBaseWithType1Discriminator_ReturnsTestType1()
+    public void DeserializeTestBaseWithType1DiscriminatorReturnsTestType1()
     {
         // Arrange
         const string json = """
@@ -94,7 +94,7 @@ public class PolymorphicSerializationTests
     /// Tests that serializing with a different discriminator throws a JsonException when deserializing.
     /// </summary>
     [Fact]
-    public void Deserialize_WrongDiscriminator_ThrowsJsonException()
+    public void DeserializeWrongDiscriminatorThrowsJsonException()
     {
         // Arrange
         const string json = """
@@ -114,7 +114,7 @@ public class PolymorphicSerializationTests
     /// Tests that the PolymorphicHelper returns correct discriminator information.
     /// </summary>
     [Fact]
-    public void GetPolymorphicTypeDiscriminator_ReturnsCorrectInfo()
+    public void GetPolymorphicTypeDiscriminatorReturnsCorrectInfo()
     {
         // Arrange
         TestType1 value = new("id1", "Test Name", 42);
@@ -132,7 +132,7 @@ public class PolymorphicSerializationTests
     /// Tests non-registered type to ensure it throws a JsonException during serialization.
     /// </summary>
     [Fact]
-    public void Serialize_NonRegisteredType_ThrowsJsonException()
+    public void SerializeNonRegisteredTypeThrowsJsonException()
     {
         // Arrange
         NonRegisteredType value = new("ABC123", "Test Title");
@@ -145,7 +145,7 @@ public class PolymorphicSerializationTests
     /// Tests non-registered type to ensure it throws a JsonException during serialization.
     /// </summary>
     [Fact]
-    public void Serialize_NonRegisteredTypeWithoutBaseType_Succeeds()
+    public void SerializeNonRegisteredTypeWithoutBaseTypeSucceeds()
     {
         // Arrange
         NonRegisteredType value = new("ABC123", "Test Title");
@@ -162,7 +162,7 @@ public class PolymorphicSerializationTests
     /// Tests that TestType1 is correctly serialized with its discriminator.
     /// </summary>
     [Fact]
-    public void Serialize_TestType1_IncludesTypeDiscriminator()
+    public void SerializeTestType1IncludesTypeDiscriminator()
     {
         // Arrange
         TestType1 value = new("id1", "Test Name", 42);

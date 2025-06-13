@@ -40,6 +40,8 @@ public static class PolymorphicHelper
     /// </summary>
     /// <param name="type">The type to get the name, type name and version.</param>
     /// <returns>The name, type name and version of the polymorphic type.</returns>
+    /// <exception cref="ArgumentNullException">The type is null.</exception>
+    /// <exception cref="InvalidOperationException">The type name is null.</exception>
     public static (string Name, string TypeName, int Version) GetPolymorphicTypeDiscriminator(this Type type)
     {
         ArgumentNullException.ThrowIfNull(type);

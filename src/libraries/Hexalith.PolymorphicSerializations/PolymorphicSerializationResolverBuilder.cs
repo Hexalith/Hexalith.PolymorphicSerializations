@@ -7,7 +7,6 @@ namespace Hexalith.PolymorphicSerializations;
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization.Metadata;
 
 /// <summary>
 /// Builder class for collecting polymorphic serialization mappers.
@@ -31,10 +30,7 @@ public class PolymorphicSerializationResolverBuilder
     /// <exception cref="ArgumentNullException">Thrown when the serialization mapper is null.</exception>
     public PolymorphicSerializationResolverBuilder AddMapper(IPolymorphicSerializationMapper serializationMapper)
     {
-        if (serializationMapper == null)
-        {
-            throw new ArgumentNullException(nameof(serializationMapper));
-        }
+        ArgumentNullException.ThrowIfNull(serializationMapper);
 
         _serializationMappers.Add(serializationMapper);
         return this;

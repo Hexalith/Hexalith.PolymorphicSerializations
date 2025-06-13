@@ -20,7 +20,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that constructor parameters are optional with correct defaults.
     /// </summary>
     [Fact]
-    public void Constructor_OptionalParameters_UsesDefaults()
+    public void ConstructorOptionalParametersUsesDefaults()
     {
         // Act
         var attribute = new PolymorphicSerializationAttribute();
@@ -35,7 +35,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that the constructor properly sets the properties.
     /// </summary>
     [Fact]
-    public void Constructor_SetsProperties()
+    public void ConstructorSetsProperties()
     {
         // Arrange
         Type baseType = typeof(AttributeTestBase);
@@ -55,7 +55,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that the GetTypeName static method returns correct name with version 1.
     /// </summary>
     [Fact]
-    public void GetTypeName_Static_WithVersion1_ReturnsNameOnly()
+    public void GetTypeNameStaticWithVersion1ReturnsNameOnly()
     {
         // Act
         string result = PolymorphicSerializationAttribute.GetTypeName("TestType", 1);
@@ -68,7 +68,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that the GetTypeName static method returns name with version suffix for version > 1.
     /// </summary>
     [Fact]
-    public void GetTypeName_Static_WithVersionGreaterThan1_ReturnsNameWithVersion()
+    public void GetTypeNameStaticWithVersionGreaterThan1ReturnsNameWithVersion()
     {
         // Act
         string result = PolymorphicSerializationAttribute.GetTypeName("TestType", 2);
@@ -81,7 +81,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that the instance GetTypeName method uses the type name if Name is not set.
     /// </summary>
     [Fact]
-    public void GetTypeName_WithNameNotSet_UsesTypeName()
+    public void GetTypeNameWithNameNotSetUsesTypeName()
     {
         // Arrange
         var attribute = new PolymorphicSerializationAttribute(version: 1);
@@ -97,7 +97,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that the instance GetTypeName method uses the Name property if set.
     /// </summary>
     [Fact]
-    public void GetTypeName_WithNameSet_UsesNameProperty()
+    public void GetTypeNameWithNameSetUsesNameProperty()
     {
         // Arrange
         var attribute = new PolymorphicSerializationAttribute("CustomName", 1);
@@ -113,7 +113,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that the instance GetTypeName method throws exception when type parameter is null.
     /// </summary>
     [Fact]
-    public void GetTypeName_WithNullType_ThrowsArgumentNullException()
+    public void GetTypeNameWithNullTypeThrowsArgumentNullException()
     {
         // Arrange
         var attribute = new PolymorphicSerializationAttribute();
@@ -126,7 +126,7 @@ public class PolymorphicSerializationAttributeTests
     /// Tests that the instance GetTypeName method includes version suffix for version > 1.
     /// </summary>
     [Fact]
-    public void GetTypeName_WithVersionGreaterThan1_IncludesVersionSuffix()
+    public void GetTypeNameWithVersionGreaterThan1IncludesVersionSuffix()
     {
         // Arrange
         var attribute = new PolymorphicSerializationAttribute(version: 2);

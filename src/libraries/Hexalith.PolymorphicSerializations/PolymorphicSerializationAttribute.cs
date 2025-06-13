@@ -50,6 +50,7 @@ public sealed class PolymorphicSerializationAttribute(string? name = null, int v
     /// <param name="type">The type.</param>
     /// <returns>The polymorphic type name.</returns>
     /// <exception cref="ArgumentNullException">The type is null.</exception>
+    /// <exception cref="InvalidOperationException">The type name is null.</exception>
     public string GetTypeName(Type type)
     {
         ArgumentNullException.ThrowIfNull(type);

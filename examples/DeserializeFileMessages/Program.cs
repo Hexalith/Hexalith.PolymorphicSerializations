@@ -20,16 +20,16 @@ List<object> list =
 ];
 
 // Serialize the list to a file
-await File.WriteAllTextAsync("messages.json", JsonSerializer.Serialize(list, PolymorphicHelper.DefaultJsonSerializerOptions));
+await File.WriteAllTextAsync("messages.json", JsonSerializer.Serialize(list, PolymorphicHelper.DefaultJsonSerializerOptions)).ConfigureAwait(false);
 
 // Read the list from the file
 List<Polymorphic> objects = JsonSerializer.Deserialize<List<Polymorphic>>(
-    await File.ReadAllTextAsync("messages.json"),
+    await File.ReadAllTextAsync("messages.json").ConfigureAwait(false),
     PolymorphicHelper.DefaultJsonSerializerOptions)
     ?? [];
 
 foreach (Polymorphic item in objects)
 {
     // Print the message
-    Console.WriteLine(JsonSerializer.Serialize<Polymorphic>(item, PolymorphicHelper.DefaultJsonSerializerOptions));
+    Console.WriteLine(JsonSerializer.Serialize(item, PolymorphicHelper.DefaultJsonSerializerOptions));
 }
