@@ -14,13 +14,11 @@ using System.Text.Json.Serialization;
 /// </summary>
 public static class PolymorphicHelper
 {
-    private static JsonSerializerOptions? _defaultJsonSerializerOptions;
-
     /// <summary>
     /// Gets the default JSON serializer options.
     /// </summary>
     /// <value>The default JSON serializer options.</value>
-    public static JsonSerializerOptions DefaultJsonSerializerOptions => _defaultJsonSerializerOptions ??=
+    public static JsonSerializerOptions DefaultJsonSerializerOptions => field ??=
         new()
         {
             WriteIndented = true,
