@@ -30,6 +30,7 @@ public class PolymorphicSerializationResolver : DefaultJsonTypeInfoResolver
     /// <param name="mapper">The mapper to be added to the default mappers.</param>
     public static void TryAddDefaultMapper(IPolymorphicSerializationMapper mapper)
     {
+        ArgumentNullException.ThrowIfNull(mapper);
         if (!_serializationMappers
             .SelectMany(m => m.Value)
             .Any(m => m.JsonDerivedType.DerivedType == mapper.JsonDerivedType.DerivedType))
@@ -46,6 +47,7 @@ public class PolymorphicSerializationResolver : DefaultJsonTypeInfoResolver
     /// <param name="mappers">The collection of mappers to be added to the default mappers.</param>
     public static void TryAddDefaultMappers(IEnumerable<IPolymorphicSerializationMapper> mappers)
     {
+        ArgumentNullException.ThrowIfNull(mappers);
         foreach (IPolymorphicSerializationMapper item in mappers)
         {
             TryAddDefaultMapper(item);
