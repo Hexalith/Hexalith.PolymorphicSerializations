@@ -28,7 +28,7 @@ public static class PolymorphicHelper
         };
 
     /// <summary>
-    /// Gets the discriminator for polymorphic serialization.
+    /// Gets the discriminator property name for polymorphic serialization.
     /// </summary>
     /// <value>The discriminator for polymorphic serialization.</value>
     public static string Discriminator => "$type";
