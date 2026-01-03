@@ -8,11 +8,11 @@ This directory contains sample applications demonstrating how to use the Hexalit
 
 A sample application demonstrating how to deserialize polymorphic messages from files. This sample shows:
 
-- Configuration of polymorphic serialization
-- Reading and deserializing different message types from JSON files
-- Type discrimination using various strategies
-- Error handling during deserialization
-- Best practices for polymorphic type resolution
+- Defining polymorphic message types using C# records
+- Applying the `[PolymorphicSerialization]` attribute for type discrimination
+- Serializing heterogeneous lists to JSON files
+- Deserializing JSON back to strongly-typed objects
+- Using source-generated serialization mappers
 
 [Browse the DeserializeFileMessages sample](./DeserializeFileMessages)
 
@@ -24,10 +24,10 @@ Each sample can be run independently. Navigate to the sample directory and follo
 
 All samples demonstrate these common patterns for working with Hexalith.PolymorphicSerializations:
 
-1. **Type Registration**: How to register polymorphic types for serialization/deserialization
-2. **Type Discrimination**: Techniques for discriminating between different types during deserialization
-3. **Custom Converters**: Implementation of custom converters for special serialization needs
-4. **Configuration Options**: Different configuration options for serialization behaviors
+1. **Type Registration**: How to register polymorphic types using source-generated mappers
+2. **Type Discrimination**: Using the `$type` discriminator property for polymorphic deserialization
+3. **Inheritance Hierarchies**: Working with abstract base classes and concrete derived types
+4. **Versioning**: Using version numbers in type discriminators (e.g., "TypeV2")
 
 ## Contributing New Samples
 
