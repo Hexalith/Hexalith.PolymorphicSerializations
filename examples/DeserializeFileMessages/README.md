@@ -112,7 +112,7 @@ The serialized JSON will include type discriminators (`$type` property) to prese
 ```json
 [
   {
-    "$type": "Hello",
+    "$type": "SayHello",
     "To": "World"
   },
   {
@@ -127,6 +127,8 @@ The serialized JSON will include type discriminators (`$type` property) to prese
 ]
 ```
 
+Note: The `$type` discriminator is derived from the class name when no custom name is specified in the `[PolymorphicSerialization]` attribute. For versioned types (version > 1), the format is `{Name}V{Version}` (e.g., "ByeV2" for `name: "Bye", version: 2`).
+
 ## Dependencies
 
 This sample references:
@@ -136,5 +138,5 @@ This sample references:
 ## Learn More
 
 For more information about the libraries used in this sample, refer to:
-- [Hexalith.PolymorphicSerializations Documentation](../../src/Hexalith.PolymorphicSerializations/README.md)
-- [Hexalith.PolymorphicSerializations.CodeGenerators Documentation](../../src/Hexalith.PolymorphicSerializations.CodeGenerators/README.md)
+- [Main Project README](../../README.md)
+- [Examples Overview](../README.md)

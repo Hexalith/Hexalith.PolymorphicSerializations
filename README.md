@@ -94,7 +94,7 @@ public partial record NewCatVersion2(string Name, bool LikesCatnip) : Animal(Nam
 
 ### 2. Register the polymorphic mappers
 
-The source generator creates a registration extension method in your project's namespace:
+The source generator creates a registration extension method in your project's namespace. The generated class follows the pattern `{AssemblyName}Serialization`:
 
 ```csharp
 using System.Text.Json;
@@ -103,7 +103,8 @@ using Hexalith.PolymorphicSerializations;
 
 // Register all polymorphic mappers defined in your project
 // This connects your model classes to the serialization system
-MyProject.RegisterPolymorphicMappers();
+// The generated class name follows the pattern: {AssemblyName}Serialization
+MyProjectSerialization.RegisterPolymorphicMappers();
 
 // Serialize the Car object. You need to specify polymorphic deserialization by using the Polymorphic type.
 string json = JsonSerializer.Serialize<Polymorphic>(new Car("Volvo", "Electric"), PolymorphicHelper.DefaultJsonSerializerOptions);
@@ -116,7 +117,7 @@ var value = JsonSerializer.Deserialize<Polymorphic>(json, PolymorphicHelper.Defa
 
 For more detailed usage examples and demonstrations of various features, explore the sample applications:
 
-- **[Sample Application README](./samples/README.md)**
+- **[Examples README](./examples/README.md)**
   - Includes examples like deserializing polymorphic messages from files (`DeserializeFileMessages`).
 
 ## Repository Structure
