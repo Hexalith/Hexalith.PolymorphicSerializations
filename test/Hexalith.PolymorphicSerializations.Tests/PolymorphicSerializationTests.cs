@@ -84,7 +84,7 @@ public class PolymorphicSerializationTests
         // Assert
         _ = result.ShouldNotBeNull();
         _ = result.ShouldBeOfType<TestType1>();
-        var type1 = (TestType1)result;
+        TestType1 type1 = (TestType1)result;
         type1.Id.ShouldBe("id1");
         type1.Name.ShouldBe("Test Name");
         type1.Value.ShouldBe(42);

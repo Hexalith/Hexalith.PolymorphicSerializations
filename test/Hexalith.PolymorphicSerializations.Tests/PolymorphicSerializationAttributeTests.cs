@@ -23,7 +23,7 @@ public class PolymorphicSerializationAttributeTests
     public void ConstructorOptionalParametersUsesDefaults()
     {
         // Act
-        var attribute = new PolymorphicSerializationAttribute();
+        PolymorphicSerializationAttribute attribute = new();
 
         // Assert
         attribute.Name.ShouldBeNull();
@@ -43,7 +43,7 @@ public class PolymorphicSerializationAttributeTests
         const int version = 2;
 
         // Act
-        var attribute = new PolymorphicSerializationAttribute(name, version, baseType);
+        PolymorphicSerializationAttribute attribute = new(name, version, baseType);
 
         // Assert
         attribute.Name.ShouldBe(name);
@@ -84,7 +84,7 @@ public class PolymorphicSerializationAttributeTests
     public void GetTypeNameWithNameNotSetUsesTypeName()
     {
         // Arrange
-        var attribute = new PolymorphicSerializationAttribute(version: 1);
+        PolymorphicSerializationAttribute attribute = new(version: 1);
 
         // Act
         string result = attribute.GetTypeName(typeof(TestType1));
@@ -100,7 +100,7 @@ public class PolymorphicSerializationAttributeTests
     public void GetTypeNameWithNameSetUsesNameProperty()
     {
         // Arrange
-        var attribute = new PolymorphicSerializationAttribute("CustomName", 1);
+        PolymorphicSerializationAttribute attribute = new("CustomName", 1);
 
         // Act
         string result = attribute.GetTypeName(typeof(TestType1));
@@ -116,7 +116,7 @@ public class PolymorphicSerializationAttributeTests
     public void GetTypeNameWithNullTypeThrowsArgumentNullException()
     {
         // Arrange
-        var attribute = new PolymorphicSerializationAttribute();
+        PolymorphicSerializationAttribute attribute = new();
 
         // Act & Assert
         _ = Should.Throw<ArgumentNullException>(() => attribute.GetTypeName(null!));
@@ -129,7 +129,7 @@ public class PolymorphicSerializationAttributeTests
     public void GetTypeNameWithVersionGreaterThan1IncludesVersionSuffix()
     {
         // Arrange
-        var attribute = new PolymorphicSerializationAttribute(version: 2);
+        PolymorphicSerializationAttribute attribute = new(version: 2);
 
         // Act
         string result = attribute.GetTypeName(typeof(TestType1));
