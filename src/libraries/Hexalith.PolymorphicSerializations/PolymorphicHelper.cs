@@ -1,13 +1,12 @@
-﻿// <copyright file="PolymorphicHelper.cs" company="ITANEO">
+// <copyright file="PolymorphicHelper.cs" company="ITANEO">
 // Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.PolymorphicSerializations;
-
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
+namespace Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Provides helper methods for polymorphic serialization.
