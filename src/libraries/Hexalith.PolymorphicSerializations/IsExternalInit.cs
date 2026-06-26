@@ -5,10 +5,10 @@
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 
+using System.ComponentModel;
+
 namespace System.Runtime.CompilerServices;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
-
-using System.ComponentModel;
 
 /// <summary>
 /// Bug fix for C# 9.0 init only setters in records.
