@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Text.Json.Serialization.Metadata;
-
 namespace Hexalith.PolymorphicSerializations;
+
+using System.Text.Json.Serialization.Metadata;
 
 /// <summary>
 /// Represents a serialization mapper used to map a type to its serialization information.
