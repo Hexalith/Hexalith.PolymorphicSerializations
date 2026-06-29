@@ -12,9 +12,9 @@
   <Import Project="$(ParentDirectoryBuildProps)" Condition="Exists('$(ParentDirectoryBuildProps)')" />
 
   <PropertyGroup>
-    <Hexalith1PackageProps>$(MSBuildThisFileDirectory)../../Hexalith.Builds/Hexalith.Package.props</Hexalith1PackageProps>
-    <Hexalith2PackageProps>$(MSBuildThisFileDirectory)../../../Hexalith.Builds/Hexalith.Package.props</Hexalith2PackageProps>
-    <Hexalith3PackageProps>$(MSBuildThisFileDirectory)../../../../Hexalith.Builds/Hexalith.Package.props</Hexalith3PackageProps>
+    <Hexalith1PackageProps>$(MSBuildThisFileDirectory)../../references/Hexalith.Builds/Hexalith.Package.props</Hexalith1PackageProps>
+    <Hexalith2PackageProps>$(MSBuildThisFileDirectory)../../../references/Hexalith.Builds/Hexalith.Package.props</Hexalith2PackageProps>
+    <Hexalith3PackageProps>$(MSBuildThisFileDirectory)../../../../references/Hexalith.Builds/Hexalith.Package.props</Hexalith3PackageProps>
   </PropertyGroup>
 
   <!-- Import the Hexalith.Package.props file from Hexalith.Builds across nested and root-level layouts. -->

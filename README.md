@@ -126,7 +126,7 @@ The repository is organized as follows:
 - [src](./src/README.md) Is the source code directory where you will add your package projects.
 - [test](./test/README.md) Contains test projects for your packages.
 - [examples](./examples/README.md) Contains example implementations of your packages.
-- [Hexalith.Builds](./Hexalith.Builds/README.md) Contains shared build configurations and tools.
+- [Hexalith.Builds](./references/Hexalith.Builds/README.md) Contains shared build configurations and tools.
 
 ## Contributing
 

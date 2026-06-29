@@ -36,8 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{A8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".project", ".project", "{C4682233-397F-4D7B-9EDF-318E2A38A6E7}"
 	ProjectSection(SolutionItems) = preProject
-		Hexalith.Builds\.clinerules = Hexalith.Builds\.clinerules
-		Hexalith.Builds\.cursorrules = Hexalith.Builds\.cursorrules
+		references\Hexalith.Builds\.clinerules = references\Hexalith.Builds\.clinerules
+		references\Hexalith.Builds\.cursorrules = references\Hexalith.Builds\.cursorrules
 		.gitignore = .gitignore
 		.gitmodules = .gitmodules
 		DOCUMENTATION.ai.md = DOCUMENTATION.ai.md
@@ -60,22 +60,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{9F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hexalith.Builds", "Hexalith.Builds", "{CE91521C-E960-4F8C-BE5E-FB392352567D}"
 	ProjectSection(SolutionItems) = preProject
-		Hexalith.Builds\ai-assistant-instructions.md = Hexalith.Builds\ai-assistant-instructions.md
-		Hexalith.Builds\ai-commit-prompt.md = Hexalith.Builds\ai-commit-prompt.md
-		Hexalith.Builds\Hexalith.Build.props = Hexalith.Builds\Hexalith.Build.props
-		Hexalith.Builds\Hexalith.globalconfig = Hexalith.Builds\Hexalith.globalconfig
-		Hexalith.Builds\Hexalith.Package.props = Hexalith.Builds\Hexalith.Package.props
-		Hexalith.Builds\icon.png = Hexalith.Builds\icon.png
-		Hexalith.Builds\LICENSE = Hexalith.Builds\LICENSE
-		Hexalith.Builds\package.json = Hexalith.Builds\package.json
-		Hexalith.Builds\README.md = Hexalith.Builds\README.md
-		Hexalith.Builds\stylecop.json = Hexalith.Builds\stylecop.json
+		references\Hexalith.Builds\ai-assistant-instructions.md = references\Hexalith.Builds\ai-assistant-instructions.md
+		references\Hexalith.Builds\ai-commit-prompt.md = references\Hexalith.Builds\ai-commit-prompt.md
+		references\Hexalith.Builds\Hexalith.Build.props = references\Hexalith.Builds\Hexalith.Build.props
+		references\Hexalith.Builds\Hexalith.globalconfig = references\Hexalith.Builds\Hexalith.globalconfig
+		references\Hexalith.Builds\Hexalith.Package.props = references\Hexalith.Builds\Hexalith.Package.props
+		references\Hexalith.Builds\icon.png = references\Hexalith.Builds\icon.png
+		references\Hexalith.Builds\LICENSE = references\Hexalith.Builds\LICENSE
+		references\Hexalith.Builds\package.json = references\Hexalith.Builds\package.json
+		references\Hexalith.Builds\README.md = references\Hexalith.Builds\README.md
+		references\Hexalith.Builds\stylecop.json = references\Hexalith.Builds\stylecop.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Props", "Props", "{63C3AFEF-8751-426A-AFB4-21EEDB348E49}"
 	ProjectSection(SolutionItems) = preProject
-		Hexalith.Builds\Props\Directory.Packages.props = Hexalith.Builds\Props\Directory.Packages.props
-		Hexalith.Builds\Props\Environment.Build.props = Hexalith.Builds\Props\Environment.Build.props
+		references\Hexalith.Builds\Props\Directory.Packages.props = references\Hexalith.Builds\Props\Directory.Packages.props
+		references\Hexalith.Builds\Props\Environment.Build.props = references\Hexalith.Builds\Props\Environment.Build.props
 	EndProjectSection
 EndProject
 Global
