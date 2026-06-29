@@ -7,6 +7,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <DevelopmentDependency>true</DevelopmentDependency>
     <LangVersion>latest</LangVersion>
+    <!-- This package ships only the analyzer assembly under analyzers/dotnet/cs and
+         carries no runtime dependencies (all PackageReferences use PrivateAssets="all").
+         Suppress the empty netstandard2.0 dependency group so its declaration matches the
+         absence of lib/ref assemblies, avoiding NU5128 at pack time. -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
   </PropertyGroup>
 
   <ItemGroup>
