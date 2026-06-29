@@ -18,6 +18,12 @@
   <Import Project="$(Hexalith3BuildBuildProps)" Condition="'$(HexalithBuildLoaded)' != 'true'" />
 
   <PropertyGroup>
+    <!-- The shared Hexalith.Build.props computes ProjectRoot as the submodule's
+         parent directory, which only equals the repository root when the submodule
+         sits at the root. This repository keeps Hexalith.Builds under references/,
+         so anchor ProjectRoot at the actual repository root (this file's directory)
+         after the import above. This fixes NU5019 when packing $(ProjectRoot)/README.md. -->
+    <ProjectRoot>$([System.IO.Path]::GetDirectoryName($(MSBuildThisFileDirectory)))</ProjectRoot>
     <Product>Hexalith.PolymorphicSerializations</Product>
     <RepositoryUrl>https://github.com/Hexalith/Hexalith.PolymorphicSerializations</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Hexalith/Hexalith.PolymorphicSerializations</PackageProjectUrl>
