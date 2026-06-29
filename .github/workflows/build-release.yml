@@ -1,7 +1,7 @@
 name: Build Packages
 on:
   push:
-    branches: 
+    branches:
       - main
       - next
       - next-major
@@ -14,21 +14,57 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and Test
     outputs:
-      version: ${{ steps.build.outputs.version }}
+      version: ${{ steps.version.outputs.version }}
+    # NOTE: The shared Hexalith/Hexalith.Builds/Github/package-release composite
+    # action hardcodes the submodule at the repository root (Hexalith.Builds).
+    # This repository keeps it under references/Hexalith.Builds, so the pipeline
+    # is inlined here and the submodule is checked out by actions/checkout
+    # instead of the package-release "initialize-build" step.
     steps:
-    - name: Build and publish packages
-      id: build
-      uses: Hexalith/Hexalith.Builds/Github/package-release@main
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v4
       with:
-        project-name: ${{ github.event.repository.name }}
+        fetch-depth: 0
+        submodules: recursive
+
+    - name: Get Version
+      id: version
+      uses: Hexalith/Hexalith.Builds/Github/version@main
+      with:
+        version-path: ./references/Hexalith.Builds/Hexalith.Version.props
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Initialize .NET
+      uses: Hexalith/Hexalith.Builds/Github/initialize-dotnet@main
+
+    - name: Run Unit Tests
+      uses: Hexalith/Hexalith.Builds/Github/unit-tests@main
+      with:
+        project-name: ${{ github.event.repository.name }}
+
+    - name: Build Packages version ${{ steps.version.outputs.version }}
+      if: ${{ steps.version.outputs.published == 'true' }}
+      uses: Hexalith/Hexalith.Builds/Github/build-packages@main
+      with:
+        version: ${{ steps.version.outputs.version }}
+
+    - name: Publish Packages
+      if: ${{ steps.version.outputs.published == 'true' }}
+      uses: Hexalith/Hexalith.Builds/Github/publish-packages@main
+      with:
+        version: ${{ steps.version.outputs.version }}
+      env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        
-    
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Release
+      uses: Hexalith/Hexalith.Builds/Github/create-release@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
