@@ -1,0 +1,54 @@
+<Solution>
+  <Folder Name="/.build/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="package.json" />
+  </Folder>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/build-release.yml" />
+  </Folder>
+  <Folder Name="/.project/">
+    <File Path=".gitignore" />
+    <File Path=".gitmodules" />
+    <File Path="DOCUMENTATION.ai.md" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="references/Hexalith.Builds/.clinerules" />
+    <File Path="references/Hexalith.Builds/.cursorrules" />
+  </Folder>
+  <Folder Name="/examples/">
+    <File Path="examples/Directory.Build.Props" />
+    <File Path="examples/README.md" />
+    <Project Path="examples/DeserializeFileMessages/DeserializeFileMessages.csproj" />
+  </Folder>
+  <Folder Name="/packages/" />
+  <Folder Name="/packages/Hexalith.Builds/">
+    <File Path="references/Hexalith.Builds/ai-assistant-instructions.md" />
+    <File Path="references/Hexalith.Builds/ai-commit-prompt.md" />
+    <File Path="references/Hexalith.Builds/Hexalith.Build.props" />
+    <File Path="references/Hexalith.Builds/Hexalith.globalconfig" />
+    <File Path="references/Hexalith.Builds/Hexalith.Package.props" />
+    <File Path="references/Hexalith.Builds/icon.png" />
+    <File Path="references/Hexalith.Builds/LICENSE" />
+    <File Path="references/Hexalith.Builds/package.json" />
+    <File Path="references/Hexalith.Builds/README.md" />
+    <File Path="references/Hexalith.Builds/stylecop.json" />
+  </Folder>
+  <Folder Name="/packages/Hexalith.Builds/Props/">
+    <File Path="references/Hexalith.Builds/Props/Directory.Packages.props" />
+    <File Path="references/Hexalith.Builds/Props/Environment.Build.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+  </Folder>
+  <Folder Name="/src/libraries/">
+    <File Path="src/libraries/Directory.Build.props" />
+    <Project Path="src/libraries/Hexalith.PolymorphicSerializations.CodeGenerators/Hexalith.PolymorphicSerializations.CodeGenerators.csproj" />
+    <Project Path="src/libraries/Hexalith.PolymorphicSerializations/Hexalith.PolymorphicSerializations.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <File Path="test/Directory.Build.props" />
+    <Project Path="test/Hexalith.PolymorphicSerializations.Tests/Hexalith.PolymorphicSerializations.Tests.csproj" />
+  </Folder>
+</Solution>
