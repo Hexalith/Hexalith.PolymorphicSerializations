@@ -1,80 +1,48 @@
-name: Build Packages
+name: Build and Release
 on:
   push:
-    branches: 
+    branches:
       - main
       - next
       - next-major
-      - aplha
+      - alpha
       - beta
       - '[0-9]+.[0-9]+.x'
+  pull_request:
+    branches:
+      - main
+      - next
+      - next-major
+      - alpha
+      - beta
 
+# Least privilege by default; the release job elevates only what it needs.
 permissions:
-  packages: write
-  contents: write
-  issues: write
-  pull-requests: write
-  
+  contents: read
+
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
-    name: Build and Test
-    outputs:
-      version: ${{ steps.version.outputs.new_release_version }}
+    name: Verify
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@main
-      with:
-        fetch-depth: 0
-
-    - name: Get Version
-      id: version
-      uses: cycjimmy/semantic-release-action@v6.0.0
-      with:
-        dry_run: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Show version information
-      run: |
-        echo "Version: ${{ steps.version.outputs.new_release_version }}"
-        echo "Major: ${{ steps.version.outputs.new_release_major_version }}"
-        echo "Minor: ${{ steps.version.outputs.new_release_minor_version }}"
-        echo "Patch: ${{ steps.version.outputs.new_release_patch_version }}"
-        echo "Published: ${{ steps.version.outputs.new_release_published }}"
-      shell: bash
-
-    - name: Initialize .NET
-      uses: Hexalith/Hexalith.Builds/Github/initialize-dotnet@main
-
-    - name: Initialize Build
-      uses: Hexalith/Hexalith.Builds/Github/initialize-build@main
-
-    - name: Run Unit Tests
-      uses: Hexalith/Hexalith.Builds/Github/unit-tests@main
+    - name: Verify build and tests
+      uses: Hexalith/Hexalith.Builds/Github/verify@main
       with:
         project-name: ${{ github.event.repository.name }}
 
-    - name: Build Packages version ${{ steps.version.outputs.new_release_version }}
-      if: ${{ steps.version.outputs.new_release_published == 'true' }}
-      uses: Hexalith/Hexalith.Builds/Github/build-packages@main
-      with:
-        version: ${{ steps.version.outputs.new_release_version }}
-
-    - name: Publish Packages
-      if: ${{ steps.version.outputs.new_release_published == 'true' }}
-      uses: Hexalith/Hexalith.Builds/Github/publish-packages@main
-      with:
-        version: ${{ steps.version.outputs.new_release_version }}
+  release:
+    runs-on: ubuntu-latest
+    name: Release
+    needs: verify
+    if: github.event_name == 'push'
+    permissions:
+      contents: write        # commit changelog, push tag, create GitHub release
+      issues: write          # semantic-release comments on released issues
+      pull-requests: write   # semantic-release comments on released PRs
+      packages: write        # push pre-release packages to GitHub Packages
+    steps:
+    - name: Build and publish packages
+      uses: Hexalith/Hexalith.Builds/Github/package-release@main
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Create Release
-      uses: cycjimmy/semantic-release-action@v6.0.0
-      with:
-        extra_plugins: |
-          @semantic-release/git
-          @semantic-release/changelog
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
