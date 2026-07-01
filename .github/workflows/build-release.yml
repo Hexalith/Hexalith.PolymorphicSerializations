@@ -20,15 +20,61 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Test
     outputs:
-      version: ${{ steps.build.outputs.version }}
+      version: ${{ steps.version.outputs.new_release_version }}
     steps:
-    - name: Build and publish packages
-      id: build
-      uses: Hexalith/Hexalith.Builds/Github/package-release@main
+    - name: Checkout repository
+      uses: actions/checkout@main
       with:
-        project-name: ${{ github.event.repository.name }}
+        fetch-depth: 0
+
+    - name: Get Version
+      id: version
+      uses: cycjimmy/semantic-release-action@v6.0.0
+      with:
+        dry_run: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Show version information
+      run: |
+        echo "Version: ${{ steps.version.outputs.new_release_version }}"
+        echo "Major: ${{ steps.version.outputs.new_release_major_version }}"
+        echo "Minor: ${{ steps.version.outputs.new_release_minor_version }}"
+        echo "Patch: ${{ steps.version.outputs.new_release_patch_version }}"
+        echo "Published: ${{ steps.version.outputs.new_release_published }}"
+      shell: bash
+
+    - name: Initialize .NET
+      uses: Hexalith/Hexalith.Builds/Github/initialize-dotnet@main
+
+    - name: Initialize Build
+      uses: Hexalith/Hexalith.Builds/Github/initialize-build@main
+
+    - name: Run Unit Tests
+      uses: Hexalith/Hexalith.Builds/Github/unit-tests@main
+      with:
+        project-name: ${{ github.event.repository.name }}
+
+    - name: Build Packages version ${{ steps.version.outputs.new_release_version }}
+      if: ${{ steps.version.outputs.new_release_published == 'true' }}
+      uses: Hexalith/Hexalith.Builds/Github/build-packages@main
+      with:
+        version: ${{ steps.version.outputs.new_release_version }}
+
+    - name: Publish Packages
+      if: ${{ steps.version.outputs.new_release_published == 'true' }}
+      uses: Hexalith/Hexalith.Builds/Github/publish-packages@main
+      with:
+        version: ${{ steps.version.outputs.new_release_version }}
+      env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        
-    
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Release
+      uses: cycjimmy/semantic-release-action@v6.0.0
+      with:
+        extra_plugins: |
+          @semantic-release/git
+          @semantic-release/changelog
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
