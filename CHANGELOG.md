@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.16.0...v1.16.1) (2026-07-02)
+
+
+### Bug Fixes
+
+* Update workflow references to use the main branch for Hexalith.Builds actions ([8a9645e](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/8a9645e45b1a05ce77297178dac62c0dbc66cbb5))
+
 # [1.16.0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.15.5...v1.16.0) (2026-07-02)
 
 
