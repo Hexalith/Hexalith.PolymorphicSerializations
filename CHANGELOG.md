@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.15.5...v1.16.0) (2026-07-02)
+
+
+### Features
+
+* Add commitlint and configuration for commit message validation ([b410573](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/b410573b12e010935d33ebd2b55b772975bcb133))
+
 ## [1.15.5](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.15.4...v1.15.5) (2026-07-02)
 
 
