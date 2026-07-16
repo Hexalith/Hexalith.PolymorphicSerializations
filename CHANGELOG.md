@@ -1,3 +1,10 @@
+## [1.16.3](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.16.2...v1.16.3) (2026-07-16)
+
+
+### Bug Fixes
+
+* update subproject commit reference for Hexalith.Builds ([5de97f5](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/5de97f5985c9f66b3f7cf77b4140dd9ee08d17e5))
+
 ## [1.16.2](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.16.1...v1.16.2) (2026-07-07)
 
 
