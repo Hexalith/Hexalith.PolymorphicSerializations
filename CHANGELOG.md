@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.16.5...v1.17.0) (2026-07-17)
+
+
+### Features
+
+* add AI instructions for coding standards and UX guidelines ([07fc737](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/07fc737e63dcc4fc4a6a1a6bd5b9d23de1e62bea))
+
 ## [1.16.5](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.16.4...v1.16.5) (2026-07-16)
 
 
