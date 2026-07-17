@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.17.0...v1.18.0) (2026-07-17)
+
+
+### Features
+
+* update AI assistant instructions for clarity and consistency ([bd2fecb](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/bd2fecb8ee8dfcdb6c3023affe546595b3869ad3))
+
 # [1.17.0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.16.5...v1.17.0) (2026-07-17)
 
 
