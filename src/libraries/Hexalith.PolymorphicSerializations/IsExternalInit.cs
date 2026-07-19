@@ -3,12 +3,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using System.ComponentModel;
+
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 
 namespace System.Runtime.CompilerServices;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
-
-using System.ComponentModel;
 
 /// <summary>
 /// Bug fix for C# 9.0 init only setters in records.

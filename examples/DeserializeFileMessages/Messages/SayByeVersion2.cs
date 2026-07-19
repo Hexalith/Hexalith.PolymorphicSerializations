@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace DeserializeFileMessages.Messages;
-
 using Hexalith.PolymorphicSerializations;
+
+namespace DeserializeFileMessages.Messages;
 
 /// <summary>
 /// SayBye message.

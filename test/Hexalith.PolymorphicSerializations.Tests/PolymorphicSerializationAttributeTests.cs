@@ -3,13 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.PolymorphicSerializations.Tests;
-
-using System;
-
 using Hexalith.PolymorphicSerializations.Tests.Objects;
 
 using Shouldly;
+
+namespace Hexalith.PolymorphicSerializations.Tests;
 
 /// <summary>
 /// Tests for <see cref="PolymorphicSerializationAttribute"/> class.

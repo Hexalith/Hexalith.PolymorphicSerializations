@@ -3,12 +3,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.PolymorphicSerializations;
-
 using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
+
+namespace Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Resolves the polymorphic serialization for JSON by extending the DefaultJsonTypeInfoResolver.

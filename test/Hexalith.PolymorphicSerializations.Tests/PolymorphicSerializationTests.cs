@@ -3,14 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.PolymorphicSerializations.Tests;
-
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using Hexalith.PolymorphicSerializations.Tests.Objects;
 
 using Shouldly;
+
+namespace Hexalith.PolymorphicSerializations.Tests;
 
 /// <summary>
 /// Tests for polymorphic serialization and deserialization.
