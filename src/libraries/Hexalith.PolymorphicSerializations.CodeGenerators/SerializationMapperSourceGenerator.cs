@@ -54,12 +54,12 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
     {
         IEnumerable<(TypeDeclarationSyntax, AttributeData)> types = classesOrRecords
             .Where(p => p.Type != null && p.Data != null)
-            .Select(p => (p.Type!, p.Data!)!);
+            .Select(p => (p.Type!, p.Data!));
         List<INamedTypeSymbol> symbols = [];
         foreach ((TypeDeclarationSyntax Type, AttributeData Data) classOrRecord in types)
         {
             SemanticModel semanticModel = compilation.GetSemanticModel(classOrRecord.Type.SyntaxTree);
-            if (semanticModel.GetDeclaredSymbol(classOrRecord.Type) is not INamedTypeSymbol symbol)
+            if (semanticModel.GetDeclaredSymbol(classOrRecord.Type, context.CancellationToken) is not INamedTypeSymbol symbol)
             {
                 continue;
             }
