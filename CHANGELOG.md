@@ -1,3 +1,16 @@
+# [1.19.0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.18.1...v1.19.0) (2026-07-26)
+
+
+### Bug Fixes
+
+* update Hexalith.Builds subproject reference to latest commit ([77021ba](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/77021ba4ef40b44068af58ccb25d3ebbb55c30c7))
+* update method call to include cancellation token in SerializationMapperSourceGenerator ([1eefc40](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/1eefc400cf972288c8b6e44b5de9f1d6b3ffddd0))
+
+
+### Features
+
+* add Hexalith.AI.Tools submodule reference ([51a8690](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/51a8690088c471dfc60ba9710e8c06e89985aca8))
+
 ## [1.18.1](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.18.0...v1.18.1) (2026-07-26)
 
 
