@@ -10,7 +10,8 @@ namespace Hexalith.PolymorphicSerializations;
 /// </summary>
 public class PolymorphicSerializationResolverBuilder
 {
-    private readonly List<IPolymorphicSerializationMapper> _serializationMappers = [];
+    private readonly List<IPolymorphicSerializationMapper> _serializationMappers =
+        new List<IPolymorphicSerializationMapper>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PolymorphicSerializationResolverBuilder"/> class.

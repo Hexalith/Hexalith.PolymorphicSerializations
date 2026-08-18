@@ -13,14 +13,31 @@ namespace Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <typeparam name="TType">The type to map.</typeparam>
 /// <typeparam name="TBase">The base type of the type to map.</typeparam>
-/// <param name="TypeDiscriminator">The type discriminator string.</param>
-public record PolymorphicSerializationMapper<TType, TBase>(string TypeDiscriminator)
-    : IPolymorphicSerializationMapper
+public record PolymorphicSerializationMapper<TType, TBase> : IPolymorphicSerializationMapper
     where TType : TBase
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PolymorphicSerializationMapper{TType, TBase}"/> class.
+    /// </summary>
+    /// <param name="typeDiscriminator">The type discriminator string.</param>
+    public PolymorphicSerializationMapper(string typeDiscriminator)
+        => TypeDiscriminator = typeDiscriminator;
+
     /// <inheritdoc/>
     public Type Base => typeof(TBase);
 
     /// <inheritdoc/>
-    public JsonDerivedType JsonDerivedType => new(typeof(TType), TypeDiscriminator);
+    public JsonDerivedType JsonDerivedType => new JsonDerivedType(typeof(TType), TypeDiscriminator);
+
+    /// <summary>
+    /// Gets the type discriminator string.
+    /// </summary>
+    public string TypeDiscriminator { get; init; }
+
+    /// <summary>
+    /// Deconstructs the mapper into its type discriminator.
+    /// </summary>
+    /// <param name="typeDiscriminator">The type discriminator string.</param>
+    public void Deconstruct(out string typeDiscriminator)
+        => typeDiscriminator = TypeDiscriminator;
 }

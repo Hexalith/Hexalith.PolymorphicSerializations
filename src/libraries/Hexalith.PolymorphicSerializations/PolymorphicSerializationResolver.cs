@@ -19,7 +19,8 @@ public class PolymorphicSerializationResolver : DefaultJsonTypeInfoResolver
     /// <summary>
     /// A thread-safe dictionary to store the mapping between base types and their serialization mappers.
     /// </summary>
-    private static readonly ConcurrentDictionary<Type, IEnumerable<IPolymorphicSerializationMapper>> _serializationMappers = new();
+    private static readonly ConcurrentDictionary<Type, IEnumerable<IPolymorphicSerializationMapper>> _serializationMappers =
+        new ConcurrentDictionary<Type, IEnumerable<IPolymorphicSerializationMapper>>();
 
     /// <summary>
     /// Attempts to add a default mapper to the static collection of default mappers.
@@ -34,7 +35,7 @@ public class PolymorphicSerializationResolver : DefaultJsonTypeInfoResolver
         {
             _serializationMappers[mapper.Base] = _serializationMappers.TryGetValue(mapper.Base, out IEnumerable<IPolymorphicSerializationMapper>? mappers)
                 ? mappers.Append(mapper)
-                : [mapper];
+                : Enumerable.Repeat(mapper, 1);
         }
     }
 

@@ -2,3 +2,9 @@ root = false
 
 [*.cs]
 csharp_new_line_before_open_brace = all
+# StyleCop.Analyzers 1.2.0-beta.66 does not parse collection expressions or
+# target-typed object creation consistently. Prefer the equivalent explicit
+# syntax until the repository upgrades that analyzer.
+csharp_style_implicit_object_creation_when_type_is_apparent = false:suggestion
+csharp_style_var_when_type_is_apparent = false:suggestion
+dotnet_style_prefer_collection_expression = false:suggestion
