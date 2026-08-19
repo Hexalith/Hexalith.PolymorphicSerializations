@@ -39,7 +39,7 @@ public static class PolymorphicHelper
     /// <returns>The name, type name and version of the polymorphic type.</returns>
     /// <exception cref="ArgumentNullException">The type is null.</exception>
     /// <exception cref="InvalidOperationException">The type name is null.</exception>
-    public static (string name, string typeName, int version) GetPolymorphicTypeDiscriminator(this Type type)
+    public static (string Name, string TypeName, int Version) GetPolymorphicTypeDiscriminator(this Type type)
     {
         ArgumentNullException.ThrowIfNull(type);
 
@@ -57,6 +57,6 @@ public static class PolymorphicHelper
     /// <param name="instance">The instance to get the name, type name and version.</param>
     /// <returns>The name, type name and version of the polymorphic type.</returns>
     /// <exception cref="ArgumentNullException">The instance is null.</exception>
-    public static (string name, string typeName, int version) GetPolymorphicTypeDiscriminator(this object instance)
+    public static (string Name, string TypeName, int Version) GetPolymorphicTypeDiscriminator(this object instance)
         => instance == null ? throw new ArgumentNullException(nameof(instance)) : instance.GetType().GetPolymorphicTypeDiscriminator();
 }

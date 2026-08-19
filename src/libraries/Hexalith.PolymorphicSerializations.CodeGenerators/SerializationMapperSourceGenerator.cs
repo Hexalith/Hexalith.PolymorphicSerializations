@@ -25,13 +25,13 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
     /// <inheritdoc/>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        IncrementalValuesProvider<(TypeDeclarationSyntax? type, AttributeData? data)> classOrRecordDeclarations = context
+        IncrementalValuesProvider<(TypeDeclarationSyntax? Type, AttributeData? Data)> classOrRecordDeclarations = context
             .SyntaxProvider
             .ForAttributeWithMetadataName(
                 _serializationMapperAttributeFullName,
                 predicate: static (node, _) => node is ClassDeclarationSyntax or RecordDeclarationSyntax,
                 transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx))
-            .Where(static m => m.type is not null && m.data is not null);
+            .Where(static m => m.Type is not null && m.Data is not null);
 
         IncrementalValueProvider<(Compilation, ImmutableArray<(TypeDeclarationSyntax?, AttributeData?)>)>
             compilationAndClasses
@@ -49,24 +49,24 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
     /// <param name="context">The source production context.</param>
     private static void Execute(
         Compilation compilation,
-        ImmutableArray<(TypeDeclarationSyntax? type, AttributeData? data)> classesOrRecords,
+        ImmutableArray<(TypeDeclarationSyntax? Type, AttributeData? Data)> classesOrRecords,
         SourceProductionContext context)
     {
         IEnumerable<(TypeDeclarationSyntax, AttributeData)> types = classesOrRecords
-            .Where(p => p.type != null && p.data != null)
-            .Select(p => (p.type!, p.data!));
+            .Where(p => p.Type != null && p.Data != null)
+            .Select(p => (p.Type!, p.Data!));
         List<INamedTypeSymbol> symbols = new List<INamedTypeSymbol>();
-        foreach ((TypeDeclarationSyntax type, AttributeData data) classOrRecord in types)
+        foreach ((TypeDeclarationSyntax Type, AttributeData Data) classOrRecord in types)
         {
-            SemanticModel semanticModel = compilation.GetSemanticModel(classOrRecord.type.SyntaxTree);
-            if (semanticModel.GetDeclaredSymbol(classOrRecord.type, context.CancellationToken) is not INamedTypeSymbol symbol)
+            SemanticModel semanticModel = compilation.GetSemanticModel(classOrRecord.Type.SyntaxTree);
+            if (semanticModel.GetDeclaredSymbol(classOrRecord.Type, context.CancellationToken) is not INamedTypeSymbol symbol)
             {
                 continue;
             }
 
             symbols.Add(symbol);
             string? namespaceName = symbol.ContainingNamespace.ToDisplayString();
-            string domainName = classOrRecord.type.Identifier.Text;
+            string domainName = classOrRecord.Type.Identifier.Text;
 
             context.AddSource(
                 $"{domainName}Mapper.g.cs",
@@ -209,7 +209,7 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
     /// <param name="context">The source production context.</param>
     /// <returns>The generated C# code for the mapper class as a string.</returns>
     private static string GenerateMapperClass(
-        (TypeDeclarationSyntax type, AttributeData data) syntax,
+        (TypeDeclarationSyntax Type, AttributeData Data) syntax,
         INamedTypeSymbol classSymbol,
         string? namespaceName,
         SourceProductionContext context)
@@ -251,16 +251,16 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
                     "CodeGeneration",
                     DiagnosticSeverity.Error,
                     true),
-                syntax.type.GetLocation(),
-                syntax.type.Identifier.Text));
+                syntax.Type.GetLocation(),
+                syntax.Type.Identifier.Text));
         }
 
         // get the name and the version from the attribute
-        TypedConstant nameParam = syntax.data.ConstructorArguments.Length > 0
-            ? syntax.data.ConstructorArguments[0]
+        TypedConstant nameParam = syntax.Data.ConstructorArguments.Length > 0
+            ? syntax.Data.ConstructorArguments[0]
             : default;
-        TypedConstant versionParam = syntax.data.ConstructorArguments.Length > 1
-            ? syntax.data.ConstructorArguments[1]
+        TypedConstant versionParam = syntax.Data.ConstructorArguments.Length > 1
+            ? syntax.Data.ConstructorArguments[1]
             : default;
         string name = nameParam.Value == null || string.IsNullOrWhiteSpace((string?)nameParam.Value)
             ? classSymbol.MetadataName
@@ -334,7 +334,7 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
     /// </summary>
     /// <param name="context">The generator attribute syntax context.</param>
     /// <returns>A tuple containing the type declaration syntax and attribute data, or (null, null) if not applicable.</returns>
-    private static (TypeDeclarationSyntax? type, AttributeData? data) GetSemanticTargetForGeneration(
+    private static (TypeDeclarationSyntax? Type, AttributeData? Data) GetSemanticTargetForGeneration(
         GeneratorAttributeSyntaxContext context)
     {
         if (context.TargetNode is not TypeDeclarationSyntax classDeclaration)
