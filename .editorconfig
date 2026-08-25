@@ -2,6 +2,9 @@ root = false
 
 [*.cs]
 csharp_new_line_before_open_brace = all
+# Keep this repository's Builds-authoritative placement stable when it is checked out below a
+# consumer whose enclosing editorconfig selects the opposite convention.
+csharp_using_directive_placement = inside_namespace:error
 # StyleCop.Analyzers 1.2.0-beta.66 does not parse collection expressions or
 # target-typed object creation consistently. Prefer the equivalent explicit
 # syntax until the repository upgrades that analyzer.

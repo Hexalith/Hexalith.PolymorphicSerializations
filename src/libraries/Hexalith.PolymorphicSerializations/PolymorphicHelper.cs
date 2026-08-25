@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace Hexalith.PolymorphicSerializations;
+
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
-namespace Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Provides helper methods for polymorphic serialization.
