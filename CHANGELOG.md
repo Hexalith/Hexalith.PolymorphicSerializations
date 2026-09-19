@@ -1,3 +1,11 @@
+## [1.19.3](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.2...v1.19.3) (2026-09-19)
+
+
+### Bug Fixes
+
+* bump versions ([cf31469](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/cf314698ba9a2fa35df19bd17507bfc8a52a52f8))
+* **ci:** select Microsoft Testing Platform runner ([af19678](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/af196787e3cdac92475f3c5ea3eccd7d5969dbb6))
+
 ## [1.19.2](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.1...v1.19.2) (2026-08-01)
 
 
