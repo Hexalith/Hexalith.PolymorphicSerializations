@@ -1,3 +1,10 @@
+## [1.19.4](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.3...v1.19.4) (2026-10-03)
+
+
+### Bug Fixes
+
+* remove .github/copilot-instructions.md file ([95786c9](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/95786c998e1c5b56219cca119af4cfb996ec297e))
+
 ## [1.19.3](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.2...v1.19.3) (2026-09-19)
 
 
