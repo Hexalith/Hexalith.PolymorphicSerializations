@@ -1,0 +1,12 @@
+{
+  "packages": [
+    {
+      "id": "Hexalith.PolymorphicSerializations",
+      "project": "src/libraries/Hexalith.PolymorphicSerializations/Hexalith.PolymorphicSerializations.csproj"
+    },
+    {
+      "id": "Hexalith.PolymorphicSerializations.CodeGenerators",
+      "project": "src/libraries/Hexalith.PolymorphicSerializations.CodeGenerators/Hexalith.PolymorphicSerializations.CodeGenerators.csproj"
+    }
+  ]
+}

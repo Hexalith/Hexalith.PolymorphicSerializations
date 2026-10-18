@@ -1,0 +1,99 @@
+name: Release
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: release-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify-source:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+    - name: Require current main and successful push CI
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        [[ "$GITHUB_REF" == refs/heads/main ]] || { echo 'Release must run from main.' >&2; exit 1; }
+        current="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+        [[ "$GITHUB_SHA" == "$current" ]] || { echo 'Release source is no longer current main.' >&2; exit 1; }
+        gh api --method GET "repos/$GITHUB_REPOSITORY/actions/workflows/build-release.yml/runs" \
+          -f branch=main -f event=push -f head_sha="$GITHUB_SHA" -f status=success -f per_page=100 |
+          jq -e --arg sha "$GITHUB_SHA" '[.workflow_runs[] | select(
+            .head_sha == $sha and .head_branch == "main" and .event == "push" and
+            .status == "completed" and .conclusion == "success"
+          )] | length > 0' >/dev/null
+
+  release:
+    needs: verify-source
+    runs-on: ubuntu-latest
+    # These names must match the existing NuGet.org Trusted Publishing policy.
+    environment: production
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      actions: read
+      id-token: write
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        ref: ${{ github.sha }}
+        fetch-depth: 0
+        submodules: false
+        persist-credentials: false
+
+    - name: Prepare the verified release source
+      id: prepare
+      uses: Hexalith/Hexalith.Builds/Github/prepare-domain-release@332b2c144defba546fe0a09626a4a72f2340e22f
+      with:
+        solution: Hexalith.PolymorphicSerializations.slnx
+        builds-execution-sha: 332b2c144defba546fe0a09626a4a72f2340e22f
+        expected-package-count: '2'
+        package-manifest: tools/release-packages.json
+        publication-flag: ${{ vars.HEXALITH_RELEASE_PUBLISH_ENABLED }}
+        source-ci-workflow: build-release.yml
+        nuget-user: ${{ vars.NUGET_USER }}
+
+    - name: Authenticate to NuGet.org with Trusted Publishing
+      if: steps.prepare.outputs.publish-enabled == 'true'
+      id: nuget_login
+      uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+      with:
+        user: ${{ vars.NUGET_USER }}
+
+    - name: Create release and publish packages
+      if: steps.prepare.outputs.publish-enabled == 'true'
+      uses: Hexalith/Hexalith.Builds/Github/create-release@332b2c144defba546fe0a09626a4a72f2340e22f
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        nuget-api-key: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
+
+    - name: Verify the GitHub release and NuGet downloads
+      if: steps.prepare.outputs.publish-enabled == 'true'
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RELEASE_SOURCE: ${{ github.sha }}
+      run: |
+        set -euo pipefail
+        tag="$(git describe --tags --exact-match HEAD)"
+        gh release view "$tag" --json isDraft --jq '.isDraft' | grep -qx false
+        python3 tools/verify_nuget_release.py "${tag#v}" --commit "$RELEASE_SOURCE"
+
+    - name: Preserve packages for release recovery
+      if: always()
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: release-packages-${{ github.run_id }}-${{ github.run_attempt }}
+        path: |
+          src/libraries/**/bin/Release/*.nupkg
+          src/libraries/**/bin/Release/*.snupkg
+        if-no-files-found: ignore
+        retention-days: 14
