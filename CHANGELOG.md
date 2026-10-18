@@ -1,3 +1,11 @@
+## [1.19.5](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.4...v1.19.5) (2026-10-18)
+
+
+### Bug Fixes
+
+* **ci:** match NuGet trusted publishing policy ([cf32fa6](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/cf32fa67ae42b110a9a697a3d645bf8186928e11))
+* **ci:** restore NuGet release publication and verification ([173f97d](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/173f97db7b5f61732b60e472b0ea4f5c7adcc4b1))
+
 ## [1.19.4](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.3...v1.19.4) (2026-10-03)
 
 
