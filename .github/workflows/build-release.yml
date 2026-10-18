@@ -1,5 +1,6 @@
 name: Build and Release
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -16,6 +17,12 @@ on:
       - alpha
       - beta
 
+# Publication is an explicit dispatch. Never cancel a release while it is pushing
+# packages or queue two publishers for the same branch at once.
+concurrency:
+  group: build-release-${{ github.ref }}
+  cancel-in-progress: false
+
 # Least privilege by default; the release job elevates only what it needs.
 permissions:
   contents: read
@@ -29,20 +36,67 @@ jobs:
       uses: Hexalith/Hexalith.Builds/Github/verify@main
       with:
         project-name: ${{ github.event.repository.name }}
+    - name: Test NuGet publication verification
+      run: python3 -m unittest discover -s tools -p 'test_*.py'
 
   release:
     runs-on: ubuntu-latest
     name: Release
     needs: verify
-    if: github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch'
     permissions:
       contents: write        # commit changelog, push tag, create GitHub release
       issues: write          # semantic-release comments on released issues
       pull-requests: write   # semantic-release comments on released PRs
       packages: write        # push pre-release packages to GitHub Packages
+      id-token: write        # obtain a temporary NuGet key when NUGET_USER is configured
     steps:
+    # NUGET_USER is the creator of a NuGet.org trust policy for this repository
+    # and build-release.yml (with no environment). An authentication failure must
+    # stop the job before semantic-release creates a tag. Repositories awaiting
+    # that policy can still supply a valid NUGET_API_KEY secret.
+    - name: Authenticate to NuGet.org with Trusted Publishing
+      if: vars.NUGET_USER != '' && github.ref_name != 'alpha' && github.ref_name != 'beta'
+      id: nuget_login
+      uses: NuGet/login@v1.2.0
+      with:
+        user: ${{ vars.NUGET_USER }}
+
+    - name: Require a NuGet publishing credential
+      if: github.ref_name != 'alpha' && github.ref_name != 'beta'
+      env:
+        NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY || secrets.NUGET_API_KEY }}
+      run: |
+        if [[ -z "$NUGET_API_KEY" ]]; then
+          echo '::error::Configure NuGet Trusted Publishing and NUGET_USER, or provide a valid NUGET_API_KEY secret.'
+          exit 1
+        fi
+
     - name: Build and publish packages
-      uses: Hexalith/Hexalith.Builds/Github/package-release@main
+      uses: Hexalith/Hexalith.Builds/Github/package-release@332b2c144defba546fe0a09626a4a72f2340e22f
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY || secrets.NUGET_API_KEY }}
+
+    - name: Verify the GitHub release and NuGet downloads
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RELEASE_SOURCE: ${{ github.sha }}
+      run: |
+        set -euo pipefail
+        tag="$(git describe --tags --exact-match HEAD)"
+        gh release view "$tag" --json isDraft --jq '.isDraft' | grep -qx false
+        if [[ "$tag" != *-* ]]; then
+          python3 tools/verify_nuget_release.py "${tag#v}" --commit "$RELEASE_SOURCE"
+        fi
+
+    - name: Preserve packages for release recovery
+      if: always()
+      uses: actions/upload-artifact@v7.0.2
+      with:
+        name: release-packages-${{ github.run_id }}-${{ github.run_attempt }}
+        path: |
+          src/libraries/**/bin/Release/*.nupkg
+          src/libraries/**/bin/Release/*.snupkg
+        if-no-files-found: ignore
+        retention-days: 14
