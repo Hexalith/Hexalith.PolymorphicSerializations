@@ -4,6 +4,7 @@
 // </copyright>
 
 namespace Hexalith.PolymorphicSerializations.Tests.Objects;
+
 /// <summary>
 /// Derived class for polymorphic serialization testing.
 /// </summary>

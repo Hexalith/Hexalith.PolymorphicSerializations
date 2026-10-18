@@ -287,9 +287,9 @@ public class SerializationMapperSourceGenerator : IIncrementalGenerator
                  using Hexalith.PolymorphicSerializations;
                  using System.Runtime.Serialization;
 
-                 /// <summary>
+                 /// <content>
                  /// Represents a polymorphic serializable record that supports JSON type discrimination.
-                 /// </summary>
+                 /// </content>
                  /// <remarks>
                  /// <para>
                  /// This partial record declaration extends the user-defined <see cref="{{classSymbol.MetadataName}}"/>
