@@ -1,6 +1,12 @@
 name: Release
 on:
   workflow_dispatch:
+    inputs:
+      verify-version:
+        description: 'Verify an existing stable release without publishing again (for example, 1.19.6)'
+        required: false
+        default: ''
+        type: string
 
 concurrency:
   group: release-production
@@ -11,6 +17,7 @@ permissions:
 
 jobs:
   verify-source:
+    if: inputs.verify-version == ''
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,6 +41,7 @@ jobs:
   release:
     needs: verify-source
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     # These names must match the existing NuGet.org Trusted Publishing policy.
     environment: production
     permissions:
@@ -97,3 +105,30 @@ jobs:
           src/libraries/**/bin/Release/*.snupkg
         if-no-files-found: ignore
         retention-days: 14
+
+  verify-published:
+    if: inputs.verify-version != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        ref: ${{ github.sha }}
+        fetch-depth: 0
+        submodules: false
+        persist-credentials: false
+
+    - name: Verify the existing release and NuGet downloads
+      env:
+        GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ inputs.verify-version }}
+      run: |
+        set -euo pipefail
+        [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'A stable release version is required.' >&2; exit 1; }
+        tag="v$VERSION"
+        gh release view "$tag" --json isDraft,isPrerelease --jq '.isDraft or .isPrerelease' | grep -qx false
+        subject="$(git show -s --format=%s "${tag}^{commit}")"
+        [[ "$subject" == "chore(release): $VERSION [skip ci]" ]] || { echo 'The tag must identify a semantic-release commit.' >&2; exit 1; }
+        source="$(git show -s --format=%P "${tag}^{commit}")"
+        [[ "$source" =~ ^[0-9a-f]{40}$ ]] || { echo 'The release must have exactly one source parent.' >&2; exit 1; }
+        python3 tools/verify_nuget_release.py "$VERSION" --commit "$source"

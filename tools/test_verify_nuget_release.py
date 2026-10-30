@@ -23,6 +23,12 @@ def package_response(package_id, version="1.19.5", commit="source-sha"):
 
 class VerifyReleaseTests(unittest.TestCase):
     @patch("verify_nuget_release.urllib.request.urlopen")
+    def test_invalid_retry_budget_fails_before_requesting_packages(self, request):
+        with self.assertRaisesRegex(ValueError, "At least one"):
+            verify_release("1.19.6", attempts=0)
+        request.assert_not_called()
+
+    @patch("verify_nuget_release.urllib.request.urlopen")
     def test_both_packages_must_be_downloadable_from_the_expected_source(self, request):
         request.side_effect = [package_response(name) for name in sorted(PACKAGES)]
         verify_release("1.19.5", "source-sha", attempts=1)

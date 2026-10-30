@@ -16,10 +16,12 @@ PACKAGES = (
 )
 
 
-def verify_release(version, commit=None, attempts=60, interval=10):
+def verify_release(version, commit=None, attempts=180, interval=10):
     """Wait for NuGet indexing; fail if either archive is missing or incorrect."""
     if not re.fullmatch(r"\d+\.\d+\.\d+", version):
         raise ValueError("A stable release version such as 1.19.5 is required.")
+    if attempts < 1:
+        raise ValueError("At least one download attempt is required.")
     pending = set(PACKAGES)
     for attempt in range(attempts):
         for package_id in sorted(pending):
@@ -63,5 +65,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("version")
     parser.add_argument("--commit", help="Expected repository commit recorded in each nuspec.")
+    parser.add_argument("--attempts", type=int, default=180, help="Download attempts, ten seconds apart (default: 180).")
     arguments = parser.parse_args()
-    verify_release(arguments.version, arguments.commit)
+    verify_release(arguments.version, arguments.commit, attempts=arguments.attempts)
