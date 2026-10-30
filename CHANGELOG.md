@@ -1,3 +1,10 @@
+## [1.19.6](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.5...v1.19.6) (2026-10-30)
+
+
+### Bug Fixes
+
+* **skills:** skip origin HEAD in pushall merges ([a9c0225](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/a9c0225f08f39f7b112519ec4339c34747d0ee34))
+
 ## [1.19.5](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.4...v1.19.5) (2026-10-18)
 
 
