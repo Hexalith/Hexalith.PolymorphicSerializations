@@ -1,3 +1,10 @@
+## [1.19.8](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.7...v1.19.8) (2026-11-01)
+
+
+### Bug Fixes
+
+* **build:** synchronize shared tooling for release ([821b784](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/821b784bb51483acefa9725acc6792d111304a4e))
+
 ## [1.19.7](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.6...v1.19.7) (2026-11-01)
 
 
