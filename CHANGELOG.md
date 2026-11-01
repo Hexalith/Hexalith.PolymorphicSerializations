@@ -1,3 +1,10 @@
+## [1.19.7](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.6...v1.19.7) (2026-11-01)
+
+
+### Bug Fixes
+
+* **build:** preserve package provenance with shared build update ([0c626eb](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/0c626ebd963d0ff3f4dedb4621c359046300594c))
+
 ## [1.19.6](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.5...v1.19.6) (2026-10-30)
 
 
