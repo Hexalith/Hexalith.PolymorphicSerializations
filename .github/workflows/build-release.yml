@@ -36,14 +36,13 @@ jobs:
         persist-credentials: false
     - name: Initialize direct build dependencies
       run: git -c submodule.recurse=false submodule update --init --checkout -- references/Hexalith.AI.Tools references/Hexalith.Builds
-    - name: Install the selected SDK and net10 runtime
+    - name: Install the selected .NET 11 SDK
       uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
       with:
         global-json-file: global.json
-        dotnet-version: '10.0.404'
     - name: Build the native test executable
       run: dotnet build test/Hexalith.PolymorphicSerializations.Tests/Hexalith.PolymorphicSerializations.Tests.csproj --configuration Release -p:GeneratePackageOnBuild=false -m:1 /nr:false
     - name: Run every unit test without skips
-      run: dotnet test/Hexalith.PolymorphicSerializations.Tests/bin/Release/net10.0/Hexalith.PolymorphicSerializations.Tests.dll -automated sync -failSkips
+      run: dotnet test/Hexalith.PolymorphicSerializations.Tests/bin/Release/net11.0/Hexalith.PolymorphicSerializations.Tests.dll -automated sync -failSkips
     - name: Test NuGet publication verification
       run: python3 -m unittest discover -s tools -p 'test_*.py'

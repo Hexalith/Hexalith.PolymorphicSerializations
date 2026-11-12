@@ -36,12 +36,13 @@ This library is particularly useful when dealing with scenarios like:
 - **Custom Type Resolution** - Flexible system for mapping between .NET types and JSON discriminator values.
 - **Minimal Configuration** - Simple attribute-based setup with reasonable defaults.
 - **High Performance** - Built on the high-performance `System.Text.Json` serialization engine.
-- **Framework Agnostic** - Works with any .NET application using .NET Standard 2.0 or higher.
+- **Framework Agnostic** - Works with .NET 11 applications across hosting frameworks.
 - **No External Dependencies** - Only depends on `System.Text.Json`.
 
 ## Requirements
 
-- .NET 10.0 or higher
+- .NET 11.0 or higher for the runtime library.
+- The source generator retains its .NET Standard 2.0 compiler-host target.
 
 ## Installation
 

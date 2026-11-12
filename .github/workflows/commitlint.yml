@@ -9,4 +9,4 @@ permissions:
   contents: read
 jobs:
   commitlint:
-    uses: Hexalith/Hexalith.Builds/.github/workflows/commitlint.yml@main
+    uses: Hexalith/Hexalith.Builds/.github/workflows/commitlint.yml@9f5d751f7ab0b7a621dcd18b589bf061fabac6ec
