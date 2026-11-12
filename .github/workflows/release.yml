@@ -60,10 +60,10 @@ jobs:
 
     - name: Prepare the verified release source
       id: prepare
-      uses: Hexalith/Hexalith.Builds/Github/prepare-domain-release@332b2c144defba546fe0a09626a4a72f2340e22f
+      uses: Hexalith/Hexalith.Builds/Github/prepare-domain-release@6ad5854aa14a9950e1fbfc32d7e27953a1c4b82b
       with:
         solution: Hexalith.PolymorphicSerializations.slnx
-        builds-execution-sha: 332b2c144defba546fe0a09626a4a72f2340e22f
+        builds-execution-sha: 6ad5854aa14a9950e1fbfc32d7e27953a1c4b82b
         expected-package-count: '2'
         package-manifest: tools/release-packages.json
         publication-flag: ${{ vars.HEXALITH_RELEASE_PUBLISH_ENABLED }}
@@ -79,7 +79,7 @@ jobs:
 
     - name: Create release and publish packages
       if: steps.prepare.outputs.publish-enabled == 'true'
-      uses: Hexalith/Hexalith.Builds/Github/create-release@332b2c144defba546fe0a09626a4a72f2340e22f
+      uses: Hexalith/Hexalith.Builds/Github/create-release@6ad5854aa14a9950e1fbfc32d7e27953a1c4b82b
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         nuget-api-key: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
