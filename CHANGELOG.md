@@ -1,3 +1,10 @@
+## [1.19.9](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.8...v1.19.9) (2026-11-12)
+
+
+### Bug Fixes
+
+* **ci:** build native tests before sdk 11 execution ([bb6d45f](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/bb6d45f3cce0a963d4453e457f47b335cf7b22e9))
+
 ## [1.19.8](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.7...v1.19.8) (2026-11-01)
 
 
