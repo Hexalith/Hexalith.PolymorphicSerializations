@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.9...v2.0.0) (2026-11-12)
+
+
+* feat!: require .NET 11 for serialization runtime ([52282d0](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/commit/52282d023156725c811fa21299f349a6fd62d989))
+
+
+### BREAKING CHANGES
+
+* The runtime package requires .NET 11 or later.
+
 ## [1.19.9](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/compare/v1.19.8...v1.19.9) (2026-11-12)
 
 
