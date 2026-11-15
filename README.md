@@ -141,6 +141,11 @@ Contributions are welcome! Here's how you can contribute:
 
 Please ensure your code follows the project's coding standards and includes appropriate tests.
 
+The explicit shared release configuration publishes NuGet packages through PowerShell and does
+not load `@semantic-release/npm`. The package override replaces that unused default plugin with
+`@semantic-release/error`, keeping npm registry publishing and its bundled npm dependency out of
+this repository's private release tooling.
+
 ## Troubleshooting
 
 ### Common Issues
