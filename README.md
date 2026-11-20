@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/github/license/hexalith/hexalith.PolymorphicSerializations)](https://github.com/hexalith/hexalith.polymorphicserializations/blob/main/LICENSE)
 [![Discord](https://img.shields.io/discord/1063152441819942922?label=Discord&logo=discord&logoColor=white&color=d82679)](https://discordapp.com/channels/1102166958918610994/1102166958918610997)
-[![Build status](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/actions/workflows/build-release.yml/badge.svg)](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/actions)
+[![Build status](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/Hexalith.PolymorphicSerializations.svg)](https://www.nuget.org/packages/Hexalith.PolymorphicSerializations)
 [![Latest](https://img.shields.io/github/v/release/Hexalith/Hexalith.PolymorphicSerializations?include_prereleases&label=preview)](https://github.com/Hexalith/Hexalith.PolymorphicSerializations/pkgs/nuget/Hexalith.PolymorphicSerializations)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/31530/badge.svg)](https://scan.coverity.com/projects/hexalith-hexalith-PolymorphicSerializations)
@@ -46,9 +46,11 @@ This library is particularly useful when dealing with scenarios like:
 
 ## Installation
 
-Install the packages via NuGet Package Manager or the .NET CLI:
+With the .NET 11 SDK, create a console project named `MyProject` and install the two packages:
 
 ```sh
+dotnet new console --name MyProject
+cd MyProject
 dotnet add package Hexalith.PolymorphicSerializations
 dotnet add package Hexalith.PolymorphicSerializations.CodeGenerators
 ```
@@ -63,7 +65,13 @@ The library uses source generators to create serialization mappers at compile ti
 2. Applying `[PolymorphicSerialization]` attributes 
 3. Installing the code generator package
 
+Create `Models.cs` in the project directory.
+
 ```csharp
+using Hexalith.PolymorphicSerializations;
+
+namespace MyProject;
+
 // Basic class with no inheritance
 // The 'partial' keyword allows the source generator to extend this type
 // The serialized JSON will include a discriminator with value "Car"
@@ -96,8 +104,11 @@ public partial record NewCatVersion2(string Name, bool LikesCatnip) : Animal(Nam
 
 The source generator creates a registration extension method in your project's namespace. The generated class follows the pattern `{AssemblyName}Serialization`:
 
+Replace `Program.cs` with this code.
+
 ```csharp
 using System.Text.Json;
+using MyProject;
 using MyProject.Extensions; // Contains the generated extension method
 using Hexalith.PolymorphicSerializations;
 
@@ -111,6 +122,17 @@ string json = JsonSerializer.Serialize<Polymorphic>(new Car("Volvo", "Electric")
 
 // Deserialize the Car object. You need to specify polymorphic deserialization by using the Polymorphic type.
 var value = JsonSerializer.Deserialize<Polymorphic>(json, PolymorphicHelper.DefaultJsonSerializerOptions);
+if (value is not Car car)
+{
+    throw new InvalidOperationException("Expected a Car after deserialization.");
+}
+Console.WriteLine($"{car.Name} ({car.EnergyType})");
+```
+
+Run `dotnet run` to print the result.
+
+```text
+Volvo (Electric)
 ```
 
 ## Sample Application

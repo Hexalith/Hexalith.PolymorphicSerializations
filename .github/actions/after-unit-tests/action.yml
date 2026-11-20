@@ -1,0 +1,8 @@
+name: Validate the package quickstart
+description: Run the README example against the two packages from the Release build.
+runs:
+  using: composite
+  steps:
+    - name: Run the documented round trip
+      shell: bash
+      run: python3 scripts/validate-readme-sample.py
